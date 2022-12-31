@@ -6,9 +6,9 @@ class Router
 {
     private $uri;
 
-    public function __construct(string $uri)
+    public function __construct()
     {
-        $this->uri = $uri;
+        //$this->uri = $uri;
     }
 
     public function start()
@@ -19,12 +19,23 @@ class Router
         if (empty($route)) {
             $route = 'index';
         }
+        $file = SITE_PATH . 'controllers/' . $route . '.php';
 
-        $action = $route;
+        if (is_readable($file) == false) {
+            die('404 Not Found');
+        }
+
         $controller = $route;
-        $model = $route;
         $class = '\\controllers\\' . $controller;
-        $controller = new $class($model);
-        $controller->$action();
+        $controller = new $class('index');
+        $controller->index();
+    }
+
+    public function handle($request)
+    {
+        $server = $request->server;
+        $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
+        $this->uri = $uri;
+        $this->start();
     }
 }
