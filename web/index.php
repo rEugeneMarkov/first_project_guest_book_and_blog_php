@@ -15,8 +15,14 @@ $router = new \classes\router();
 //$router->start();
 
 $request = \Classes\Request::createFromGlobals();
-//$response = $router->handle($request);
-$router->handle($request);
+$response = $router->handle($request);
+var_dump($response);
+echo (string)$response;
+//$response->send();
+//var_dump($response);
+//$router->handle($request);
+//var_dump($request->get);
+
 // var_dump($request->post);
 // echo "<br>";
 // echo "<br>";

@@ -28,7 +28,8 @@ class Router
         $controller = $route;
         $class = '\\controllers\\' . $controller;
         $controller = new $class('index');
-        $controller->index();
+        $content = $controller->index();
+        return $content;
     }
 
     public function handle($request)
