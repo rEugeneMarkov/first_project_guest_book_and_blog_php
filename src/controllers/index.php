@@ -14,9 +14,12 @@ class Index
     public function index()
     {
         $class = '\\models\\' . $this->model;
-        $model = new $class;
+        $model = new $class();
         $data = $model->getData();
         $view = (SITE_PATH . 'view/view.php');
-        include($view);
+        //include($view);
+        $content = 'Hello world';
+        $response = new \classes\response($content);
+        return $response;
     }
 }
