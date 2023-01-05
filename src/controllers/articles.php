@@ -5,7 +5,7 @@ namespace Controllers;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
-class Index
+class Articles
 {
     private $model;
     private $view;
@@ -22,7 +22,7 @@ class Index
         $class = '\\models\\' . $this->model;
         $model = new $class();
         $data = $model->getData();
-        $body = $this->view->render('index.twig', $data);
+        $body = $this->view->render('articles.twig', $data);
         //$view = (SITE_PATH . 'view/view.php');
         //include($view);
         $content = $body;

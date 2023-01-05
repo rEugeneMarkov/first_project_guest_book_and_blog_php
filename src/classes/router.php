@@ -26,8 +26,9 @@ class Router
         }
 
         $controller = $route;
+        $model = $route;
         $class = '\\controllers\\' . $controller;
-        $controller = new $class('index');
+        $controller = new $class($model);
         $content = $controller->index();
         return $content;
     }
@@ -37,6 +38,7 @@ class Router
         $server = $request->server;
         $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
         $this->uri = $uri;
-        $this->start();
+        $content = $this->start();
+        return $content;
     }
 }

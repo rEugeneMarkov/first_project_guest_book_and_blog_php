@@ -1,0 +1,15 @@
+{
+    "name": "jevgenijsmarkovs/my_blog",
+    "description": "Blog on PHP and MySQL",
+    "type": "project",
+    "authors": [
+        {
+            "name": "rEugeneMarkov",
+            "email": "117519379+rEugeneMarkov@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

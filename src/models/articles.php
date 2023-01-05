@@ -3,11 +3,11 @@
 namespace models;
 
 // модель
-class Index
+class Articles
 {
     public function getData()
     {
         //return $data = "test";
-        return array('id' => 1, 'name' => 'World');
+        return array('id' => 1, 'name' => 'Articles2');
     }
 }

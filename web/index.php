@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 include($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/core.php');
+require(SITE_TEMP . '/vendor/autoload.php');
 
 //$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 //var_dump($uri);
@@ -16,7 +17,7 @@ $router = new \classes\router();
 
 $request = \Classes\Request::createFromGlobals();
 $response = $router->handle($request);
-var_dump($response);
+//var_dump($response);
 echo (string)$response;
 //$response->send();
 //var_dump($response);
