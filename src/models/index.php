@@ -3,7 +3,7 @@
 namespace models;
 
 // модель
-class Index
+class Index extends Base
 {
     public function getData()
     {

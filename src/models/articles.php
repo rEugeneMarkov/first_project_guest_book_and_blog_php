@@ -3,7 +3,7 @@
 namespace models;
 
 // модель
-class Articles
+class Articles extends Base
 {
     public function getData()
     {
