@@ -29,6 +29,7 @@ class Router
         $model = $route;
         $class = '\\controllers\\' . $controller;
         $controller = new $class($model);
+        //$content = $controller->index();
         $content = $controller->index();
         return $content;
     }
