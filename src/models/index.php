@@ -10,9 +10,10 @@ class Index extends Base
         //return $data = "test";
         return array('id' => 1, 'name' => 'World');
     }
-    public function getDataFromSql()
+    public static function getDataFromTable(string $table)
     {
-        $data = $this->db->query('SELECT * FROM `index`');
+        $db = \Classes\DB::getDb();
+        $data = $db->query('SELECT * FROM `' . $table . '`');
         $data = $data->fetchAll();
         return $data;
     }

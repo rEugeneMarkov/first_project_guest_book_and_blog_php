@@ -13,7 +13,7 @@ class Index extends Base
 
     public function index()
     {
-        $data = $this->modelObj->getDataFromSql();
+        $data = \models\Index::getDataFromTable('index');
         $content = $this->view->render('index.twig', array('data' => $data));
         $response = new \classes\response($content);
         return $response;
