@@ -10,6 +10,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "knplabs/knp-paginator-bundle": "^6.0"
     }
 }

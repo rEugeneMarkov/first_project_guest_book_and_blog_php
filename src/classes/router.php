@@ -14,7 +14,7 @@ class Router
         //$this->uri = $uri;
     }
 
-    public function start()
+    public function start($request)
     {
         $route = $this->uri;
         $route = trim($route, '/\\');
@@ -30,7 +30,7 @@ class Router
             $content = $view->render('error404.twig', []);
             $response = new \classes\response($content);
             return $response;
-            //die;
+            die;
             //die('404 Not Found');
         }
 
@@ -38,21 +38,16 @@ class Router
         $model = $route;
         $class = '\\controllers\\' . $controller;
         $controller = new $class($model);
-        $content = $controller->index();
+        $content = $controller->index($request);
         return $content;
     }
 
     public function handle($request)
     {
         $server = $request->server;
-        $post = $request->post;
-        if(!$post){
-
-        }
-        var_dump($post);
         $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
         $this->uri = $uri;
-        $content = $this->start();
+        $content = $this->start($request);
         return $content;
     }
 }
