@@ -27,6 +27,7 @@ class Base
         VALUES (NULL, '$name', CURRENT_TIMESTAMP, '$comment')");
         
     }
+
     public static function getTableCount(string $table)
     {
         $db = \Classes\DB::getDb();

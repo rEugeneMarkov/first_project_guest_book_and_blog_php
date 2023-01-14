@@ -1,0 +1,20 @@
+{% extends 'base.twig' %}
+{% block body%}
+<h2>Страница регистрации</h2>
+
+<div id="form">
+    <div class="text-success">{{data.success}}</div>
+        <form action="" method="post">
+            <p><input type="text" name="name_reg" value="{{data.name}}" 
+                    placeholder="Введите имя" class="form-control"></p>
+            <div class="text-danger">{{data.e_username}}</div><br>
+            <p><input type="email" name="email_reg" value="{{data.email}}" 
+                    placeholder="Введите email" class="form-control"></p>
+            <div class="text-danger">{{data.e_email}}</div><br>
+            <p><input type="password" name="pass_reg" placeholder="Введите пароль" class="form-control"></p>
+            <div class="text-danger">{{data.e_pass}}</div><br>
+            <p><input type="submit" class="btn btn-info btn-block" value="Зарегистрироваться"></p>
+        </form> 
+    </div>
+
+{% endblock %}

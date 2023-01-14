@@ -2,12 +2,16 @@
 
 namespace Classes;
 
-abstract class Db
+class Db
 {
+    private static $db;
+
     public static function getDb()
     {
-        $db = new \PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-        $db->exec('SET CHARACTER SET utf8');
-        return $db;
+        if (self::$db === null) {
+        self::$db = new \PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+        self::$db->exec('SET CHARACTER SET utf8');
+        }
+        return self::$db;
     }
 }
