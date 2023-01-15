@@ -7,10 +7,10 @@ use Twig\Environment;
 
 class Base
 {
-    protected $model;
-    protected $view;
-    protected $data;
-    protected $modelObj;
+    protected string $model;
+    protected object $view;
+    protected array $data;
+    protected object $modelObj;
 
     public function __construct(string $model)
     {
@@ -20,11 +20,12 @@ class Base
         $class = '\\models\\' . $this->model;
         $model = new $class();
         $this->modelObj = $model;
-        $data = $model->getData();
-        $this->data = $data;
     }
-    public function getData()
+
+    public function helper(array $data): \Classes\Response
     {
-        return $this->data;
+        $content = $this->view->render($this->model . '.twig', $data);
+        $response = new \Classes\Response($content);
+        return $response;
     }
 }

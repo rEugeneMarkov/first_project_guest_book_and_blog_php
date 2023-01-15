@@ -7,12 +7,11 @@ class Base
 {
     protected $db;
 
-    Public function __construct()
+    public function __construct()
     {
-        
     }
 
-    public static function getDataFromTable(string $table)
+    public static function getDataFromTable(string $table): array
     {
         $db = \Classes\DB::getDb();
         $data = $db->query('SELECT * FROM `' . $table . '`ORDER BY `id` DESC');
@@ -25,10 +24,9 @@ class Base
         $db = \Classes\DB::getDb();
         $db->query("INSERT INTO `index` (`id`, `name`, `date`, `content`) 
         VALUES (NULL, '$name', CURRENT_TIMESTAMP, '$comment')");
-        
     }
 
-    public static function getTableCount(string $table)
+    public static function getTableCount(string $table): int
     {
         $db = \Classes\DB::getDb();
         $res = $db->query("SELECT COUNT(*) FROM `$table`");

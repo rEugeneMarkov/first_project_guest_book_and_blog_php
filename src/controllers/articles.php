@@ -4,10 +4,9 @@ namespace Controllers;
 
 class Articles extends Base
 {
-    public function index()
+    public function index(\Classes\Request $request): \Classes\Response
     {
-        $content = $this->view->render('articles.twig', $this->getData());
-        $response = new \classes\response($content);
-        return $response;
+        $data = $this->modelObj->getData();
+        return $this->helper(['data' => $data]);
     }
 }

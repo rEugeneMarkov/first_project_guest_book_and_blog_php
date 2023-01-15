@@ -4,7 +4,6 @@ namespace Classes;
 
 class Response
 {
-
     protected $content;
 
 
