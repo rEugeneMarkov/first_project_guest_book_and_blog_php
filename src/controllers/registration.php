@@ -22,7 +22,7 @@ class Registration extends Base
                 $error['e_pass'] = "Минимальная длинна пароля 6 символов";
             } else {
                 \Models\User::addUser($data['name'], $data['email'], $data['pass']);
-                $data['success'] = "Вы успешно зарегистрировались!";
+                $error['success'] = "Вы успешно зарегистрировались!";
             }
         } else {
             $error = [];
