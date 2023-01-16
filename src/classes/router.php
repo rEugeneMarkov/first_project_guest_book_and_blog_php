@@ -28,7 +28,7 @@ class Router
             $loader = new FilesystemLoader(paths:'templates');
             $view = new Environment($loader);
             $content = $view->render('error404.twig', []);
-            $response = new \classes\response($content);
+            $response = new \Classes\Response($content);
             return $response;
             die;
             //die('404 Not Found');

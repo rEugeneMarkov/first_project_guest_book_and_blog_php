@@ -2,9 +2,12 @@
 
 namespace Controllers;
 
+use Classes\Request;
+use Classes\Response;
+
 class Index extends Base
 {
-    public function index(\Classes\Request $request): \Classes\Response
+    public function index(Request $request): Response
     {
         $post = $request->post;
 
@@ -13,6 +16,6 @@ class Index extends Base
         }
 
         $data = \Models\Index::getDataFromTable('index');
-        return $this->helper(['data' => $data]);
+        return $this->contentToResponse(['data' => $data]);
     }
 }

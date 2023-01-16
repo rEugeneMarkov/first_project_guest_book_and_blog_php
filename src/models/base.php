@@ -20,7 +20,7 @@ class Base
         return $data;
     }
 
-    public static function addComment(string $name, string $comment)
+    public static function addComment(string $name, string $comment): void
     {
         $db = \Classes\Db::getDb();
         $sth = $db->prepare('INSERT INTO `index` (`id`, `name`, `date`, `content`) 

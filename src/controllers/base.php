@@ -4,11 +4,13 @@ namespace Controllers;
 
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use Classes\Request;
+use Classes\Response;
 
 class Base
 {
     protected string $model;
-    protected object $view;
+    protected Environment $view;
     protected array $data;
     protected object $modelObj;
 
@@ -22,10 +24,10 @@ class Base
         $this->modelObj = $model;
     }
 
-    public function helper(array $data): \Classes\Response
+    public function contentToResponse(array $data): Response
     {
         $content = $this->view->render($this->model . '.twig', $data);
-        $response = new \Classes\Response($content);
+        $response = new Response($content);
         return $response;
     }
 }

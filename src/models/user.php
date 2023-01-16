@@ -5,7 +5,7 @@ namespace models;
 // модель
 class User extends Base
 {
-    public static function addUser(string $name, string $email, string $pass)
+    public static function addUser(string $name, string $email, string $pass): void
     {
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("INSERT INTO `users` (`id`, `name`, `pass`, `email`, `date`) 

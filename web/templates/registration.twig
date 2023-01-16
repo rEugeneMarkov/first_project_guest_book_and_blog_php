@@ -3,16 +3,22 @@
 <h2>Страница регистрации</h2>
 
 <div id="form">
-    <div class="text-success">{{error.success}}</div>
+    {% if error.success %}
+        <div class="text-success">{{error.success}}</div>
+    {% endif %}
         <form action="" method="post">
-            <p><input type="text" name="name_reg" value="{{data.name}}" 
-                    placeholder="Введите имя" class="form-control"></p>
-            <div class="text-danger">{{error.e_username}}</div><br>
-            <p><input type="email" name="email_reg" value="{{data.email}}" 
-                    placeholder="Введите email" class="form-control"></p>
-            <div class="text-danger">{{error.e_email}}</div><br>
+            <p><input type="text" name="name_reg" value="{{data.name}}" placeholder="Введите имя" class="form-control"></p>
+                {% if error.e_username %}
+                    <div class="text-danger">{{error.e_username}}</div><br>
+                {% endif %}
+            <p><input type="email" name="email_reg" value="{{data.email}}" placeholder="Введите email" class="form-control"></p>
+                {% if error.e_email %}
+                    <div class="text-danger">{{error.e_email}}</div><br>
+                {% endif %}
             <p><input type="password" name="pass_reg" placeholder="Введите пароль" class="form-control"></p>
-            <div class="text-danger">{{error.e_pass}}</div><br>
+                {% if error.e_pass %}
+                    <div class="text-danger">{{error.e_pass}}</div><br>
+                {% endif %}
             <p><input type="submit" class="btn btn-info btn-block" value="Зарегистрироваться"></p>
         </form> 
     </div>
