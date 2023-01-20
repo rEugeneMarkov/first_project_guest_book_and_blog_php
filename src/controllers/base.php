@@ -12,7 +12,7 @@ class Base
     protected string $model;
     protected Environment $view;
     protected array $data;
-    protected object $modelObj;
+    protected \models\Base $modelObj;
 
     public function __construct(string $model)
     {
