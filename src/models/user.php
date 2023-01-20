@@ -21,4 +21,22 @@ class User extends Base
         $row = $sth->rowCount();
         return $row > 0;
     }
+
+    public static function getUserByEmailAndPass($email, $pass): object
+    {
+        $db = \Classes\Db::getDb();
+        $sth = $db->prepare("SELECT * FROM `users` WHERE email = ? AND pass = ?");
+        $sth->execute([$email, $pass]);
+        $user = $sth->fetchObject();
+        return $user;
+    }
+
+    public static function getUserByEmail($email): object
+    {
+        $db = \Classes\Db::getDb();
+        $sth = $db->prepare("SELECT * FROM `users` WHERE email = ?");
+        $sth->execute([$email]);
+        $user = $sth->fetchObject();
+        return $user;
+    }
 }

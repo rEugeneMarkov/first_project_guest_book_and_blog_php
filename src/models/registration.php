@@ -3,7 +3,7 @@
 namespace models;
 
 // модель
-class Registration extends User
+class Registration extends Base
 {
     public static function getDataFromPost(array $post): array
     {

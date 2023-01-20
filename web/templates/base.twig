@@ -8,10 +8,21 @@
     </head>
     <body>
     <div id="wrapper">
+    <div style="text-align: right;">
+    {% if username %}
+        <div class="text-success">
+            Добро пожаловать {{username}}
+            <a href="/login">Выйти</a>
+        </div>
+    {% endif %}
+    {% if username == false %}
+        <a href="/registration">Регистрация</a> |
+    <a href="/login">Войти</a> 
+    {% endif %}
+    </div>
 <header>
 <a href="/">Главная</a> |
     <a href="/articles">Статьи</a> |
-    <a href="/registration">Регистрация</a> |
 </header> 
 
 {% block body %}

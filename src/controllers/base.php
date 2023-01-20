@@ -13,6 +13,7 @@ class Base
     protected Environment $view;
     protected array $data;
     protected \models\Base $modelObj;
+    protected ?object $user;
 
     public function __construct(string $model)
     {
@@ -22,10 +23,18 @@ class Base
         $class = '\\models\\' . $this->model;
         $model = new $class();
         $this->modelObj = $model;
+        if (isset($_SESSION['email'])) {
+            $this->user = \Models\User::getUserByEmail($_SESSION['email']);
+        } else {
+            $this->user = null;
+        }
     }
 
     public function contentToResponse(array $data): Response
     {
+        if ($this->user != null) {
+            $data['username'] = $this->user->name;
+        }
         $content = $this->view->render($this->model . '.twig', $data);
         $response = new Response($content);
         return $response;
