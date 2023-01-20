@@ -19,6 +19,7 @@ abstract class Base
 
     protected array $data;
     protected ?\models\Base $modelObj;
+    protected ?object $user;
 
     public function __construct(string $model)
     {
@@ -31,6 +32,11 @@ abstract class Base
         */
         $model = new $class();
         $this->modelObj = $model;
+        if (isset($_SESSION['email'])) {
+            $this->user = \Models\User::getUserByEmail($_SESSION['email']);
+        } else {
+            $this->user = null;
+        }
     }
 
     abstract public function index(Request $request): Response;
@@ -40,6 +46,9 @@ abstract class Base
     */
     public function contentToResponse(array $data): Response
     {
+        if ($this->user != null) {
+            $data['username'] = $this->user->name;
+        }
         $content = $this->view->render($this->model . '.twig', $data);
         $response = new Response($content);
         return $response;

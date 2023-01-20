@@ -3,7 +3,7 @@
 namespace models;
 
 // модель
-class Registration extends User
+class Registration extends Base
 {
     /**
      * @param array<string, string> $post
