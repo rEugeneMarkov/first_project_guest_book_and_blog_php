@@ -27,7 +27,7 @@ class User extends Base
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("SELECT * FROM `users` WHERE email = ? AND pass = ?");
         $sth->execute([$email, $pass]);
-        $user = $sth->fetchObject();
+        $user = $sth->fetchObject('\Models\User');
         return $user;
     }
 
@@ -36,7 +36,7 @@ class User extends Base
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("SELECT * FROM `users` WHERE email = ?");
         $sth->execute([$email]);
-        $user = $sth->fetchObject();
+        $user = $sth->fetchObject('\Models\User');
         return $user;
     }
 }

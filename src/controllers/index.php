@@ -10,9 +10,8 @@ class Index extends Base
     public function index(Request $request): Response
     {
         $post = $request->post;
-
-        if ($post != []) {
-            \models\Index::addComment('Евгений Марков', $post['comment']);
+        if (!empty($post['add_comment'])) {
+            \Models\Index::addComment($this->user->name, $post['comment']);
         }
 
         $data = \models\Index::getDataFromTable('index');

@@ -19,7 +19,7 @@ abstract class Base
 
     protected array $data;
     protected ?\models\Base $modelObj;
-    protected ?object $user;
+    protected ?\models\User $user;
 
     public function __construct(string $model)
     {

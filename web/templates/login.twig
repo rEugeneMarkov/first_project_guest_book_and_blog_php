@@ -5,20 +5,20 @@
 {% if username %}
 <div style="text-align: center;">
 <form method="post">
-Вы выполнили вход как {{username}}
+    Вы выполнили вход как {{username}}
     <button name="clear_session" type="submit"class="btn btn-info btn-group">Выйти</button>
 </form> 
 </div>
-{% endif %}
 
-{% if username == false %}
+{% else %}
+
 <div style="text-align: center;">
-            <form action="" method="post">
-            <input type="email" name="email_login" placeholder="Введите email" class="form-group">
-            <input type="password" name="pass_login" placeholder="Введите пароль" class="form-group">
-            <button name="login_button" type="submit"class="btn btn-info btn-group">Войти</button>
-            </form> 
-        </div>
+    <form action="" method="post">
+        <input type="email" name="email_login" placeholder="Введите email" class="form-group">
+        <input type="password" name="pass_login" placeholder="Введите пароль" class="form-group">
+        <button name="login_button" type="submit"class="btn btn-info btn-group">Войти</button>
+    </form> 
+</div>
 {% endif %}
 
 {% endblock %}
