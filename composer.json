@@ -2,6 +2,7 @@
     "name": "jevgenijsmarkovs/my_blog",
     "description": "Blog on PHP and MySQL",
     "type": "project",
+    "license": "MIT",
     "authors": [
         {
             "name": "rEugeneMarkov",
