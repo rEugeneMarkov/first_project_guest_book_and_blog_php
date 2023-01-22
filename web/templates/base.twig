@@ -14,8 +14,7 @@
             Добро пожаловать {{username}}
             <a href="/login">Выйти</a>
         </div>
-    {% endif %}
-    {% if username == false %}
+    {% else %}
         <a href="/registration">Регистрация</a> |
     <a href="/login">Войти</a> 
     {% endif %}
