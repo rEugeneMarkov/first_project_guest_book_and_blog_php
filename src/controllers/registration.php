@@ -13,11 +13,11 @@ class Registration extends Base
         $message = [];
         $data = [];
 
-        if (!empty($post)) {
-            $data = \Models\Registration::getDataFromPost($post);
-            $message = \Models\Registration::validate($data);
-            if (!$message) {
-                \Models\User::addUser($data['name'], $data['email'], $data['pass']);
+        if ($post != []) {
+            $data = \models\Registration::getDataFromPost($post);
+            $message = \models\Registration::validate($data);
+            if ($message == []) {
+                \models\User::addUser($data['name'], $data['email'], $data['pass']);
                 $message['success'] = "Вы успешно зарегистрировались!";
             }
         }

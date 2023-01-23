@@ -8,7 +8,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/core.php');
 require(SITE_TEMP . '/vendor/autoload.php');
 
-$router = new \classes\router();
+$router = new \Classes\Router();
 
 $request = \Classes\Request::createFromGlobals();
 $response = $router->handle($request);

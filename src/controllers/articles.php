@@ -9,7 +9,13 @@ class Articles extends Base
 {
     public function index(Request $request): Response
     {
-        $data = $this->modelObj->getData();
+        $post = $request->post;
+
+        if ($post != []) {
+            \models\Index::addComment('Евгений Марков', $post['comment']);
+        }
+
+        $data = \models\Index::getDataFromTable('articles');
         return $this->contentToResponse(['data' => $data]);
     }
 }

@@ -1,4 +1,16 @@
 {% extends 'base.twig' %}
 {% block body%}
-Hello {{data.name}}
+
+{% for item in data %}
+<div class="note">
+    <p>
+        <span class="date">{{ item.date }}</span>
+        <span class="name">{{ item.name }}</span>
+    </p>
+    <p>
+        {{ item.content }}
+    </p>
+</div>
+
+{% endfor %}
 {% endblock %}

@@ -5,9 +5,11 @@ namespace models;
 // модель
 class Articles extends Base
 {
-    public function getData()
+    /**
+     * @return array{id: int, name: string}
+     */
+    public function getData(): array
     {
-        //return $data = "test";
         return array('id' => 1, 'name' => 'Articles2');
     }
 }

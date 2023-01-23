@@ -4,15 +4,33 @@ namespace Classes;
 
 class Request
 {
-    public $server;
-    public $get;
-    public $post;
+    /**
+     * @var array<string, string>
+     */
 
-    public function __construct()
+    public array $server;
+
+    /**
+     * @var array<string, string>
+     */
+
+    public array $get;
+
+    /**
+     * @var array<string, string>
+     */
+
+    public array $post;
+    /**
+     * @param array<string, string> $get
+     * @param array<string, string> $post
+     * @param array<string, string> $server
+     */
+    final public function __construct(array $get = [], array $post = [], array $server = [])
     {
-        $this->server = $_SERVER;
-        $this->get = $_GET;
-        $this->post = $_POST;
+        $this->server = $server;
+        $this->get = $get;
+        $this->post = $post;
     }
 
     public static function createFromGlobals(): static
@@ -21,8 +39,15 @@ class Request
         return $request;
     }
 
-    private static function createRequestFromFactory(array $query = [], array $request = [], array $server = []): static
+    /**
+     * @param array<string, string> $get
+     * @param array<string, string> $post
+     * @param array<string, string> $server
+     * @return static
+     */
+
+    private static function createRequestFromFactory(array $get = [], array $post = [], array $server = []): static
     {
-        return new static($query, $request, $server);
+        return new static($get, $post, $server);
     }
 }

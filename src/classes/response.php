@@ -4,10 +4,10 @@ namespace Classes;
 
 class Response
 {
-    protected $content;
+    protected string $content;
 
 
-    public function __construct(?string $content = '')
+    public function __construct(string $content = '')
     {
         $this->setContent($content);
     }
@@ -17,17 +17,25 @@ class Response
         return $this->getContent();
     }
 
-    public function setContent(string $content)
+    /**
+     * @return $this
+     */
+
+    public function setContent(?string $content): static
     {
         $this->content = $content ?? '';
 
         return $this;
     }
 
-    public function getContent(): string|false
+    public function getContent(): string
     {
         return $this->content;
     }
+
+    /**
+     * @return $this
+     */
 
     public function sendContent(): static
     {
@@ -36,7 +44,11 @@ class Response
         return $this;
     }
 
-    public function send()
+    /**
+     * @return $this
+     */
+
+    public function send(): static
     {
         $this->sendContent();
 

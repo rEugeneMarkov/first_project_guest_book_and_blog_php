@@ -11,11 +11,11 @@ class Index extends Base
     {
         $post = $request->post;
 
-        if (!empty($post)) {
-            \Models\Index::addComment('Евгений Марков', $post['comment']);
+        if ($post != []) {
+            \models\Index::addComment('Евгений Марков', $post['comment']);
         }
 
-        $data = \Models\Index::getDataFromTable('index');
+        $data = \models\Index::getDataFromTable('index');
         return $this->contentToResponse(['data' => $data]);
     }
 }

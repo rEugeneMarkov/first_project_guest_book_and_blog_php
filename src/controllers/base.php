@@ -7,12 +7,18 @@ use Twig\Environment;
 use Classes\Request;
 use Classes\Response;
 
-class Base
+abstract class Base
 {
     protected string $model;
     protected Environment $view;
+
+    /**
+     * @param array<string, array> $data
+     * @var array<string|int, string|int>
+     */
+
     protected array $data;
-    protected \models\Base $modelObj;
+    protected ?\models\Base $modelObj;
 
     public function __construct(string $model)
     {
@@ -20,10 +26,18 @@ class Base
         $loader = new FilesystemLoader(paths:'templates');
         $this->view = new Environment($loader);
         $class = '\\models\\' . $this->model;
+        /**
+        * @var ?\models\Base $model
+        */
         $model = new $class();
         $this->modelObj = $model;
     }
 
+    abstract public function index(Request $request): Response;
+
+    /**
+    * @param array<string|int, mixed> $data
+    */
     public function contentToResponse(array $data): Response
     {
         $content = $this->view->render($this->model . '.twig', $data);

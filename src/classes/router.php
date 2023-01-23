@@ -4,22 +4,23 @@ namespace Classes;
 
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use Classes\Response;
+use Classes\Request;
 
 class Router
 {
-    private $uri;
+    private string $uri;
 
     public function __construct()
     {
         //$this->uri = $uri;
     }
 
-    public function start($request)
+    public function start(Request $request): Response
     {
         $route = $this->uri;
-        $route = trim($route, '/\\');
 
-        if (empty($route)) {
+        if ($route == '') {
             $route = 'index';
         }
         $file = SITE_PATH . 'controllers/' . $route . '.php';
@@ -30,22 +31,26 @@ class Router
             $content = $view->render('error404.twig', []);
             $response = new \Classes\Response($content);
             return $response;
-            die;
-            //die('404 Not Found');
         }
 
         $controller = $route;
         $model = $route;
         $class = '\\controllers\\' . $controller;
         $controller = new $class($model);
+        /** @var \Controllers\Base $controller */
         $content = $controller->index($request);
         return $content;
     }
 
-    public function handle($request)
+    public function handle(Request $request): Response
     {
         $server = $request->server;
         $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
+        if ($uri != false) {
+            $uri = trim($uri, '/\\');
+        } else {
+            $uri = '';
+        }
         $this->uri = $uri;
         $content = $this->start($request);
         return $content;

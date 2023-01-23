@@ -4,7 +4,7 @@ namespace Classes;
 
 class Db
 {
-    private static $db;
+    public static ?\PDO $db = null;
 
     public static function getDb(): \PDO
     {
