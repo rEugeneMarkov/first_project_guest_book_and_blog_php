@@ -33,7 +33,7 @@ abstract class Base
         $model = new $class();
         $this->modelObj = $model;
         if (isset($_SESSION['email'])) {
-            $this->user = \Models\User::getUserByEmail($_SESSION['email']);
+            $this->user = \models\User::getUserByEmail($_SESSION['email']);
         } else {
             $this->user = null;
         }

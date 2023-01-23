@@ -13,9 +13,10 @@ class Login extends Base
         $data = [];
 
         if (isset($post['login_button'])) {
-            $data = \Models\Login::getDataFromPost($post);
-            if ($user = \Models\User::getUserByEmailAndPass($data['email'], $data['pass'])) {
-                $_SESSION['email'] = $user->email ;
+            $data = \models\Login::getDataFromPost($post);
+            $user = \models\User::getUserByEmailAndPass($data['email'], $data['pass']);
+            if ($user != false) {
+                $_SESSION['email'] = $data['email'] ;
                 header("Location: /");
             }
         }

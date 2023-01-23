@@ -5,6 +5,9 @@ namespace models;
 // модель
 class User extends Base
 {
+    public string $name = '';
+    public string $email = '';
+
     public static function addUser(string $name, string $email, string $pass): void
     {
         $db = \Classes\Db::getDb();
@@ -22,7 +25,7 @@ class User extends Base
         return $row > 0;
     }
 
-    public static function getUserByEmailAndPass($email, $pass): object
+    public static function getUserByEmailAndPass(string $email, string $pass): object|false
     {
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("SELECT * FROM `users` WHERE email = ? AND pass = ?");
@@ -31,12 +34,16 @@ class User extends Base
         return $user;
     }
 
-    public static function getUserByEmail($email): object
+    public static function getUserByEmail(string $email): self|null
     {
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("SELECT * FROM `users` WHERE email = ?");
         $sth->execute([$email]);
         $user = $sth->fetchObject('\Models\User');
-        return $user;
+        if ($user == false) {
+            return null;
+        } else {
+            return $user;
+        }
     }
 }
