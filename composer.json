@@ -19,7 +19,8 @@
         "phpstan/phpstan": "^1.9",
         "phpstan/extension-installer": "^1.2",
         "phpstan/phpstan-strict-rules": "^1.4",
-        "phpstan/phpstan-deprecation-rules": "^1.1"
+        "phpstan/phpstan-deprecation-rules": "^1.1",
+        "squizlabs/php_codesniffer": "*"
     },
     "config": {
         "allow-plugins": {
