@@ -12,7 +12,7 @@ class Pagination
 
 
     /**
-     * @param array<string, int> $get
+     * @param array<string, int|string> $get
      */
     public function __construct(string $table, int $kol, array $get)
     {
@@ -25,7 +25,7 @@ class Pagination
     }
 
     /**
-     * @param array<string, int> $get
+     * @param array<string, int|string> $get
      */
 
     private function getPageFromGet(array $get): int
@@ -35,6 +35,7 @@ class Pagination
         } else {
             $page = 1;
         }
+        $page = (int) $page;
         return $page;
     }
     /**

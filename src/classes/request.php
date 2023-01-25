@@ -11,7 +11,7 @@ class Request
     public array $server;
 
     /**
-     * @var array<string, int>
+     * @var array<string, int|string>
      */
 
     public array $get;
@@ -22,7 +22,7 @@ class Request
 
     public array $post;
     /**
-     * @param array<string, int> $get
+     * @param array<string, int|string> $get
      * @param array<string, string> $post
      * @param array<string, string> $server
      */
@@ -40,7 +40,7 @@ class Request
     }
 
     /**
-     * @param array<string, int> $get
+     * @param array<string, int|string> $get
      * @param array<string, string> $post
      * @param array<string, string> $server
      * @return static
