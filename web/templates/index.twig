@@ -11,6 +11,8 @@
     <div class="text-danger">{{message.error}}</div><br>
 {% endif %}
 
+{{include ('pagination.twig')}}
+
 {% for item in data %}
 <div class="note">
     <p>

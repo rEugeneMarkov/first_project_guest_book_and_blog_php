@@ -21,7 +21,12 @@ class Index extends Base
             }
         }
 
-        $data = \models\Index::getDataFromTable('index');
-        return $this->contentToResponse(['data' => $data, 'message' => $message]);
+        $get = $request->get;
+        $pagination = new \Classes\Pagination('index', 3, $get);
+        $pages = \Classes\Pagination::getDataPages($pagination->page, $pagination->strPag);
+        $data = \models\Index::getTableContent('index', $pagination->art, $pagination->kol);
+        //var_dump($pages);
+        //$data = \models\Index::getDataFromTable('index');
+        return $this->contentToResponse(['data' => $data, 'message' => $message, 'pages' => $pages]);
     }
 }

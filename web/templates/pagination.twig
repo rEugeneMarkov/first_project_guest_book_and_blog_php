@@ -1,0 +1,23 @@
+<div style="text-align: center;">
+        <nav>
+            <ul class="pagination">
+            <li>
+                <a href="?page={{pages.previus_page}}"  aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% for i in 1..pages.str_pag %}
+                {% if i == pages.page %}
+                    <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                {% else %}
+                    <li><a href="?page={{i}}"> {{i}} </a></li>
+                {% endif %}
+            {% endfor %}
+            <li>
+                <a href="?page={{pages.next_page}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            </ul>
+        </nav>
+    </div>
