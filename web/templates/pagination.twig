@@ -6,13 +6,39 @@
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            {% for i in 1..pages.str_pag %}
-                {% if i == pages.page %}
-                    <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
-                {% else %}
-                    <li><a href="?page={{i}}"> {{i}} </a></li>
+                {% if pages.str_pag <= 10 %}
+                    {% for i in 1..pages.str_pag %}
+                        {% if i == pages.page %}
+                            <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                        {% else %}
+                            <li><a href="?page={{i}}"> {{i}} </a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% elseif pages.page > 4 and pages.page < pages.str_pag-4 %}
+                        {% for i in pages.page-4..pages.page+4 %}
+                            {% if i == pages.page %}
+                                <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                            {% else %}
+                                <li><a href="?page={{i}}"> {{i}} </a></li>
+                            {% endif %}
+                        {% endfor %}
+                {% elseif pages.page <= 4 %}
+                    {% for i in 1..9 %}
+                            {% if i == pages.page %}
+                                <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                            {% else %}
+                                <li><a href="?page={{i}}"> {{i}} </a></li>
+                            {% endif %}
+                    {% endfor %}
+                {% elseif pages.page >= pages.str_pag-4 %}
+                    {% for i in pages.str_pag-8..pages.str_pag %}
+                            {% if i == pages.page %}
+                                <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                            {% else %}
+                                <li><a href="?page={{i}}"> {{i}} </a></li>
+                            {% endif %}
+                    {% endfor %}    
                 {% endif %}
-            {% endfor %}
             <li>
                 <a href="?page={{pages.next_page}}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
