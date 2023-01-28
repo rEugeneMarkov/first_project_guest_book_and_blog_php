@@ -20,13 +20,18 @@ class Index extends Base
                 $message['success'] = "Запись успешно сохранена!";
             }
         }
+        //тест комментариев
+        $comments = new \Classes\Comments();
+        $data = $comments->getcommentsByArticleid(1);
+        //var_dump($data);
+        $tree = $comments->createTree($data);
+        var_dump($tree);
+        //тест комментариев
 
         $get = $request->get;
         $pagination = new \Classes\Pagination('index', 3, $get);
         $pages = \Classes\Pagination::getDataPages($pagination->page, $pagination->strPag);
         $data = \models\Index::getTableContent('index', $pagination->art, $pagination->kol);
-        //var_dump($pages);
-        //$data = \models\Index::getDataFromTable('index');
         return $this->contentToResponse(['data' => $data, 'message' => $message, 'pages' => $pages]);
     }
 }
