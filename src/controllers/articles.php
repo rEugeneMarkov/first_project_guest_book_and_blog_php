@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Classes\Request;
 use Classes\Response;
+use models\Index as MIndex;
 
 class Articles extends Base
 {
@@ -11,9 +12,8 @@ class Articles extends Base
     {
         $get = $request->get;
         $pagination = new \Classes\Pagination('articles', 3, $get);
-        $pages = \Classes\Pagination::getDataPages($pagination->page, $pagination->strPag);
-        $data = \models\Index::getTableContent('articles', $pagination->art, $pagination->kol);
-        //$data = \models\Index::getDataFromTable('articles');
-        return $this->contentToResponse(['data' => $data, 'pages' => $pages]);
+        $pagesInfo = $pagination->getPagesInfo();
+        $data = MIndex::getTableContent('articles', $pagination->firstRow, $pagination->rowCount);
+        return $this->contentToResponse(['data' => $data, 'pages' => $pagesInfo]);
     }
 }
