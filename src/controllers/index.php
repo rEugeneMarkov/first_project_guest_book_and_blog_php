@@ -21,11 +21,11 @@ class Index extends Base
             }
         }
         //тест комментариев
-        $comments = new \Classes\Comments();
-        $data = $comments->getcommentsByArticleid(1);
+        //$comments = new \Classes\Comments();
+        //$data = $comments->getcommentsByArticleid(1);
         //var_dump($data);
-        $tree = $comments->createTree($data);
-        var_dump($tree);
+        //$tree = $comments->createTree($data);
+        //var_dump($tree);
         //тест комментариев
 
         $get = $request->get;
