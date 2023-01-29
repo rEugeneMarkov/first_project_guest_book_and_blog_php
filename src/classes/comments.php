@@ -6,7 +6,6 @@ class Comments
 {
     /**
     * @return array <mixed>
-    * Получаем все комментарии к определённой статье
     */
     public function getcommentsByArticleid(int $article): array
     {
