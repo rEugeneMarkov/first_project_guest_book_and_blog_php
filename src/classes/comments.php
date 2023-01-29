@@ -1,7 +1,7 @@
 <?php
 
 namespace Classes;
- 
+
 class Comments
 {
     /**
@@ -24,28 +24,28 @@ class Comments
     {
         $parents_arr = [];
 
-	    foreach($data as $key=>$item) {
-		    $parents_arr[$item['pid']][$item['id']] = $item;
-	    }
-	    $treeElem = $parents_arr[0];
-	    self::generateElemTree($treeElem,$parents_arr);
-	
-	    return $treeElem;
+        foreach ($data as $key => $item) {
+            $parents_arr[$item['pid']][$item['id']] = $item;
+        }
+        $treeElem = $parents_arr[0];
+        self::generateElemTree($treeElem, $parents_arr);
+
+        return $treeElem;
     }
 
     /**
      * @param array <mixed> $parents_arr
      * @param array <mixed> $treeElem
      */
-    public function generateElemTree(&$treeElem,$parents_arr): void
+    public function generateElemTree(&$treeElem, $parents_arr): void
     {
-        foreach($treeElem as $key=>$item) {
-            if(!isset($item['children'])) {
+        foreach ($treeElem as $key => $item) {
+            if (!isset($item['children'])) {
                 $treeElem[$key]['children'] = [];
             }
-            if(array_key_exists($key,$parents_arr)) {
+            if (array_key_exists($key, $parents_arr)) {
                 $treeElem[$key]['children'] = $parents_arr[$key];
-                self::generateElemTree($treeElem[$key]['children'],$parents_arr);
+                self::generateElemTree($treeElem[$key]['children'], $parents_arr);
             }
         }
     }

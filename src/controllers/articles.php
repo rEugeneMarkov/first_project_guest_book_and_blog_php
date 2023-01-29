@@ -24,12 +24,11 @@ class Articles extends Base
                 //var_dump($data);
                 //$tree = $comments->createTree($data);
                 //-----------------
-                return $this->contentToResponse(['data' => $article, 'tree'=>$tree]);
+                return $this->contentToResponse(['data' => $article, 'tree' => $tree]);
             } else {
                 return \Classes\Router::getErrorPage();
             }
         } else {
-
             $get = $request->get;
             $pagination = new \Classes\Pagination('articles', 10, $get);
             $pagesInfo = $pagination->getPagesInfo();
@@ -38,4 +37,3 @@ class Articles extends Base
         }
     }
 }
-
