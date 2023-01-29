@@ -73,5 +73,5 @@ class Router
         $content = $view->render('error404.twig', []);
         $response = new \Classes\Response($content);
         return $response;
-    }
+    }//
 }
