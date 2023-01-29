@@ -9,28 +9,28 @@ use Classes\Request;
 
 class Router
 {
-    private string $uri;
+    /**
+     * @var array<int,int|string>
+     */
+    private array $uri;
 
     public function __construct()
     {
-        //$this->uri = $uri;
     }
 
     public function start(Request $request): Response
     {
         $route = $this->uri;
+        $route = $route[0];
 
         if ($route == '') {
             $route = 'index';
         }
         $file = SITE_PATH . 'controllers/' . $route . '.php';
+        //var_dump($route);
 
         if (is_readable($file) == false) {
-            $loader = new FilesystemLoader(paths:'templates');
-            $view = new Environment($loader);
-            $content = $view->render('error404.twig', []);
-            $response = new \Classes\Response($content);
-            return $response;
+            return self::getErrorPage();
         }
 
         $controller = $route;
@@ -45,14 +45,34 @@ class Router
     public function handle(Request $request): Response
     {
         $server = $request->server;
-        $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
-        if ($uri != false) {
-            $uri = trim($uri, '/\\');
-        } else {
-            $uri = '';
-        }
+        $uri = self::getUriFromServer($server);
         $this->uri = $uri;
         $content = $this->start($request);
         return $content;
+    }
+
+    /**
+     * @param array<string, string> $server
+     * @return array<int, string>
+     */
+
+    public static function getUriFromServer(array $server): array
+    {
+        $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
+        if ($uri != false) {
+            $uri = trim($uri, '/\\');
+            $uri = explode("/", $uri);
+        } else {
+            $uri = [];
+        }
+        return $uri;
+    }
+    public static function getErrorPage(): Response
+    {
+        $loader = new FilesystemLoader(paths:'templates');
+        $view = new Environment($loader);
+        $content = $view->render('error404.twig', []);
+        $response = new \Classes\Response($content);
+        return $response;
     }
 }
