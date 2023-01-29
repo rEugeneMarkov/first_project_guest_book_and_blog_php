@@ -4,19 +4,28 @@ namespace Controllers;
 
 use Classes\Request;
 use Classes\Response;
+use models\Index as MIndex;
 
 class Index extends Base
 {
     public function index(Request $request): Response
     {
         $post = $request->post;
-        if ($this->user != null && $post != []) {
-            if (($post['add_comment'] == true)) {
-                \models\Index::addComment($this->user->name, $post['comment']);
+        $message = [];
+
+        if ($this->user != null && isset($post['add_comment'])) {
+            $data = MIndex::getDataFromPost($post);
+            $message = MIndex::validate($data);
+            if ($message == []) {
+                MIndex::addComment($this->user->name, $data['comment']);
+                $message['success'] = "Запись успешно сохранена!";
             }
         }
 
-        $data = \models\Index::getDataFromTable('index');
-        return $this->contentToResponse(['data' => $data]);
+        $get = $request->get;
+        $pagination = new \Classes\Pagination('index', 3, $get);
+        $pagesInfo = $pagination->getPagesInfo();
+        $data = MIndex::getTableContent('index', $pagination->firstRow, $pagination->rowCount);
+        return $this->contentToResponse(['data' => $data, 'message' => $message, 'pages' => $pagesInfo]);
     }
 }

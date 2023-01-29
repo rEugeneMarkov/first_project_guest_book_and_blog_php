@@ -1,0 +1,49 @@
+<div style="text-align: center;">
+        <nav>
+            <ul class="pagination">
+            <li>
+                <a href="?page={{pages.previous_page}}"  aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+                {% if pages.pagesCount <= 10 %}
+                    {% for i in 1..pages.pagesCount %}
+                        {% if i == pages.currentPage %}
+                            <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                        {% else %}
+                            <li><a href="?page={{i}}"> {{i}} </a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% elseif pages.currentPage > 4 and pages.currentPage < pages.pagesCount-4 %}
+                        {% for i in pages.currentPage-4..pages.currentPage+4 %}
+                            {% if i == pages.currentPage %}
+                                <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                            {% else %}
+                                <li><a href="?page={{i}}"> {{i}} </a></li>
+                            {% endif %}
+                        {% endfor %}
+                {% elseif pages.currentPage <= 4 %}
+                    {% for i in 1..9 %}
+                            {% if i == pages.currentPage %}
+                                <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                            {% else %}
+                                <li><a href="?page={{i}}"> {{i}} </a></li>
+                            {% endif %}
+                    {% endfor %}
+                {% elseif pages.currentPage >= pages.pagesCount-4 %}
+                    {% for i in pages.pagesCount-8..pages.pagesCount %}
+                            {% if i == pages.currentPage %}
+                                <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
+                            {% else %}
+                                <li><a href="?page={{i}}"> {{i}} </a></li>
+                            {% endif %}
+                    {% endfor %}    
+                {% endif %}
+            <li>
+                <a href="?page={{pages.next_page}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            </ul>
+        </nav>
+    </div>

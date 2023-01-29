@@ -11,11 +11,11 @@ class Registration extends Base
      */
     public static function getDataFromPost(array $post): array
     {
-        $data = [];
-        $data['name'] = trim($post['name_reg']);
-        $data['email'] = trim($post['email_reg']);
-        $data['pass'] = trim($post['pass_reg']);
-        return $data;
+        return [
+            'name'  => trim($post['name_reg']),
+            'email' => trim($post['email_reg']),
+            'pass'  => trim($post['pass_reg'])
+        ];
     }
 
     /**

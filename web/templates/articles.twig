@@ -1,6 +1,10 @@
 {% extends 'base.twig' %}
 {% block body%}
 
+<h2>Статьи</h2>
+
+{{include ('pagination.twig')}}
+
 {% for item in data %}
 <div class="note">
     <p>
