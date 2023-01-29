@@ -2,37 +2,37 @@
         <nav>
             <ul class="pagination">
             <li>
-                <a href="?page={{pages.previus_page}}"  aria-label="Previous">
+                <a href="?page={{pages.previous_page}}"  aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-                {% if pages.str_pag <= 10 %}
-                    {% for i in 1..pages.str_pag %}
-                        {% if i == pages.page %}
+                {% if pages.pagesCount <= 10 %}
+                    {% for i in 1..pages.pagesCount %}
+                        {% if i == pages.currentPage %}
                             <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
                         {% else %}
                             <li><a href="?page={{i}}"> {{i}} </a></li>
                         {% endif %}
                     {% endfor %}
-                {% elseif pages.page > 4 and pages.page < pages.str_pag-4 %}
-                        {% for i in pages.page-4..pages.page+4 %}
-                            {% if i == pages.page %}
+                {% elseif pages.currentPage > 4 and pages.currentPage < pages.pagesCount-4 %}
+                        {% for i in pages.currentPage-4..pages.currentPage+4 %}
+                            {% if i == pages.currentPage %}
                                 <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
                             {% else %}
                                 <li><a href="?page={{i}}"> {{i}} </a></li>
                             {% endif %}
                         {% endfor %}
-                {% elseif pages.page <= 4 %}
+                {% elseif pages.currentPage <= 4 %}
                     {% for i in 1..9 %}
-                            {% if i == pages.page %}
+                            {% if i == pages.currentPage %}
                                 <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
                             {% else %}
                                 <li><a href="?page={{i}}"> {{i}} </a></li>
                             {% endif %}
                     {% endfor %}
-                {% elseif pages.page >= pages.str_pag-4 %}
-                    {% for i in pages.str_pag-8..pages.str_pag %}
-                            {% if i == pages.page %}
+                {% elseif pages.currentPage >= pages.pagesCount-4 %}
+                    {% for i in pages.pagesCount-8..pages.pagesCount %}
+                            {% if i == pages.currentPage %}
                                 <li class="active"><a href="?page={{i}}"> {{i}} </a></li>
                             {% else %}
                                 <li><a href="?page={{i}}"> {{i}} </a></li>

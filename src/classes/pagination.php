@@ -4,24 +4,24 @@ namespace Classes;
 
 class Pagination
 {
-    public int $kol; // количество записей для вывода
-    public int $art; // с какой записи выводить
-    public int $total; // всего записей
-    public int $page; // текущая страница
-    public int $strPag; // количество страниц пагинации
+    public int $rowCount; // количество записей для вывода
+    public int $firstRow; // с какой записи выводить
+    public int $totalRows; // всего записей
+    public int $currentPage; // текущая страница
+    public int $pagesCount; // количество страниц пагинации
 
 
     /**
      * @param array<string, int|string> $get
      */
-    public function __construct(string $table, int $kol, array $get)
+    public function __construct(string $table, int $rowCount, array $get)
     {
-        $this->kol = $kol;
-        $this->page = $this->getPageFromGet($get);
-        $this->art = ($this->page * $this->kol) - $this->kol;
-        $this->total = \models\Base::getTableCount($table);
-        $str = ceil($this->total / $this->kol);
-        $this->strPag = (int) $str;
+        $this->rowCount = $rowCount;
+        $this->currentPage = $this->getPageFromGet($get);
+        $this->firstRow = ($this->currentPage * $this->rowCount) - $this->rowCount;
+        $this->totalRows = \models\Base::getTableCount($table);
+        $str = ceil($this->totalRows / $this->rowCount);
+        $this->pagesCount = (int) $str;
     }
 
     /**
@@ -41,20 +41,21 @@ class Pagination
     /**
      * @return array<string, int>
      */
-    public static function getDataPages(int $page, int $strPag): array
+    public function getPagesInfo(): array
     {
         $pages = [];
-        $pages['page'] = $page;
-        $pages['str_pag'] = $strPag;
-        if ($page > 1) {
-            $pages['previus_page'] = $page - 1;
+        $currentPage = $this->currentPage;
+        $pages['currentPage'] = $currentPage;
+        $pages['pagesCount'] = $this->pagesCount;
+        if ($currentPage > 1) {
+            $pages['previous_page'] = $currentPage - 1;
         } else {
-            $pages['previus_page'] = $page;
+            $pages['previous_page'] = $currentPage;
         }
-        if ($page < $strPag) {
-            $pages['next_page'] = $page + 1;
+        if ($currentPage < $this->pagesCount) {
+            $pages['next_page'] = $currentPage + 1;
         } else {
-            $pages['next_page'] = $page;
+            $pages['next_page'] = $currentPage;
         }
         return $pages;
     }

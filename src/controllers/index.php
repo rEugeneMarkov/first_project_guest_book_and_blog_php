@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Classes\Request;
 use Classes\Response;
+use models\Index as MIndex;
 
 class Index extends Base
 {
@@ -13,20 +14,18 @@ class Index extends Base
         $message = [];
 
         if ($this->user != null && isset($post['add_comment'])) {
-            $data = \models\Index::getDataFromPost($post);
-            $message = \models\Index::validate($data);
+            $data = MIndex::getDataFromPost($post);
+            $message = MIndex::validate($data);
             if ($message == []) {
-                \models\Index::addComment($this->user->name, $data['comment']);
+                MIndex::addComment($this->user->name, $data['comment']);
                 $message['success'] = "Запись успешно сохранена!";
             }
         }
 
         $get = $request->get;
         $pagination = new \Classes\Pagination('index', 3, $get);
-        $pages = \Classes\Pagination::getDataPages($pagination->page, $pagination->strPag);
-        $data = \models\Index::getTableContent('index', $pagination->art, $pagination->kol);
-        //var_dump($pages);
-        //$data = \models\Index::getDataFromTable('index');
-        return $this->contentToResponse(['data' => $data, 'message' => $message, 'pages' => $pages]);
+        $pagesInfo = $pagination->getPagesInfo();
+        $data = MIndex::getTableContent('index', $pagination->firstRow, $pagination->rowCount);
+        return $this->contentToResponse(['data' => $data, 'message' => $message, 'pages' => $pagesInfo]);
     }
 }

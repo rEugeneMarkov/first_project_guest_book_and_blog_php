@@ -11,9 +11,9 @@ class Index extends Base
      */
     public static function getDataFromPost(array $post): array
     {
-        $data = [];
-        $data['comment'] = trim($post['comment']);
-        return $data;
+        return [
+            'comment' => trim($post['comment'])
+        ];
     }
 
     /**
