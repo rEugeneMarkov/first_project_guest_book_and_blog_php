@@ -21,10 +21,15 @@ class AddArticle extends Base
                     $data['username'] = $this->user->name;
                     $data['email'] = $this->user->email;
                 }
-                $array = [$data['username'], $data['email'], $data['url'], $data['header'], $data['article']];
+                $array = [
+                    $data['username'],
+                    $data['email'],
+                    $data['url'],
+                    $data['header'],
+                    $data['article']
+                ];
                 \models\AddArticle::addArticle($array);
                 $message['success_add_article'] = "Вы успешно добавили статью!";
-                //header("Location: /articles");
             }
         }
         return $this->contentToResponse(['data' => $data, 'message' => $message]);
