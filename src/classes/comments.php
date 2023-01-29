@@ -6,6 +6,7 @@ class Comments
 {
     /**
     * @return array <mixed>
+
     */
     public function getcommentsByArticleid(int $article): array
     {
