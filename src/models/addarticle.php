@@ -14,7 +14,7 @@ class AddArticle extends Base
         $data = [];
         $data['header'] = trim($post['add_header']);
         $data['article'] = trim($post['add_article_content']);
-        $data['url'] = self::translit($data['header']);
+        $data['url'] = $this->translit($data['header']);
         return $data;
     }
 
@@ -35,7 +35,7 @@ class AddArticle extends Base
         return $error;
     }
 
-    public static function translit(string $s): string
+    public function translit(string $s): string
     {
         //$s = (string) $s; // преобразуем в строковое значение
         $s = trim($s); // убираем пробелы в начале и конце строки

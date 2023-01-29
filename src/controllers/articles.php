@@ -19,10 +19,9 @@ class Articles extends Base
             if ($article != null) {
                 $this->model = 'article';
                 //-----------------
-                //$comments = new \Classes\Comments();
-                //$data = $comments->getcommentsByArticleid(1);
-                //var_dump($data);
-                //$tree = $comments->createTree($data);
+                $comments = new \Classes\Comments();
+                $data = $comments->getcommentsByArticleid(1);
+                $tree = $comments->createTree($data);
                 //-----------------
                 return $this->contentToResponse(['data' => $article, 'tree' => $tree]);
             } else {

@@ -27,7 +27,6 @@ class Router
             $route = 'index';
         }
         $file = SITE_PATH . 'controllers/' . $route . '.php';
-        //var_dump($route);
 
         if (is_readable($file) == false) {
             return self::getErrorPage();
