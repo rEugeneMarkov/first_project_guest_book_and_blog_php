@@ -39,18 +39,23 @@ class AddArticle extends Base
     {
         //$s = (string) $s; // преобразуем в строковое значение
         $s = trim($s); // убираем пробелы в начале и конце строки
-        $s = function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s); // переводим строку в нижний регистр (иногда надо задать локаль)
-        $s = strtr($s, array('а'=>'a','б'=>'b','в'=>'v','г'=>'g','д'=>'d','е'=>'e','ё'=>'e','ж'=>'j','з'=>'z','и'=>'i','й'=>'y','к'=>'k','л'=>'l','м'=>'m','н'=>'n','о'=>'o','п'=>'p','р'=>'r','с'=>'s','т'=>'t','у'=>'u','ф'=>'f','х'=>'h','ц'=>'c','ч'=>'ch','ш'=>'sh','щ'=>'shch','ы'=>'y','э'=>'e','ю'=>'yu','я'=>'ya','ъ'=>'','ь'=>''));
+        // переводим строку в нижний регистр (иногда надо задать локаль)
+        $s = function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s);
+        $s = strtr($s, array(
+            'а' => 'a','б' => 'b','в' => 'v','г' => 'g','д' => 'd','е' => 'e',
+            'ё' => 'e','ж' => 'j','з' => 'z','и' => 'i','й' => 'y','к' => 'k',
+            'л' => 'l','м' => 'm','н' => 'n','о' => 'o','п' => 'p','р' => 'r',
+            'с' => 's','т' => 't','у' => 'u','ф' => 'f','х' => 'h','ц' => 'c',
+            'ч' => 'ch','ш' => 'sh','щ' => 'shch','ы' => 'y','э' => 'e','ю' => 'yu','я' => 'ya','ъ' => '','ь' => ''));
         $s = str_replace(' ', '-', $s);
         return $s; // возвращаем результат
     }
 
-    public static function addArticle(string $name, string $email, string $url, string $header, string $content): void
+    public static function addArticle(array $data): void
     {
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("INSERT INTO `articles` (`id`, `name`, `email`, `url`, `header`, `content`, `date`) 
         VALUES (NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
-        $sth->execute([$name, $email, $url, $header, $content]);
+        $sth->execute([$data[0], $data[1], $data[2], $data[3], $data[4]]);
     }
-
 }

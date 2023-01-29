@@ -8,7 +8,7 @@ use Classes\Response;
 use Classes\Request;
 
 class Router
-{   
+{
     /**
      * @var array<int,int|string>
      */
@@ -50,7 +50,7 @@ class Router
         $content = $this->start($request);
         return $content;
     }
-    
+
     /**
      * @param array<string, string> $server
      * @return array<int, string>
@@ -61,7 +61,7 @@ class Router
         $uri = parse_url($server['REQUEST_URI'], PHP_URL_PATH);
         if ($uri != false) {
             $uri = trim($uri, '/\\');
-            $uri = explode("/",$uri);
+            $uri = explode("/", $uri);
         } else {
             $uri = [];
         }

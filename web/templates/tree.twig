@@ -1,0 +1,15 @@
+{% set tree = data.tree %}
+{% macro list(items, step = 0) %}
+    {% import _self as tree %}
+ 
+    <ul class="tree-list-step-{{ step }}" style="margin-left: {{ step * 25 }}px;">
+    {% for item in items %}
+        <li>
+            {{ item }}
+            {% if item.children %}
+                {{ tree.list(item.children, step + 1) }}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endmacro %}

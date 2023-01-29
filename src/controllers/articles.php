@@ -17,7 +17,13 @@ class Articles extends Base
             $article = \models\Articles::getArticleByUri($uri[1]);
             if ($article != null) {
                 $this->model = 'article';
-                return $this->contentToResponse(['data' => $article]);
+                //-----------------
+                //$comments = new \Classes\Comments();
+                //$data = $comments->getcommentsByArticleid(1);
+                //var_dump($data);
+                //$tree = $comments->createTree($data);
+                //-----------------
+                return $this->contentToResponse(['data' => $article, 'tree'=>$tree]);
             } else {
                 return \Classes\Router::getErrorPage();
             }

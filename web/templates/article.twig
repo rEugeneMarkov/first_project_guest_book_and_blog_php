@@ -12,7 +12,14 @@
     <p>
         {{ item.content }}
     </p>
+    
 </div>
 
 {% endfor %}
+
+    <p>
+        {% import "tree.twig" as tree %}
+        {{ tree.list(items) }}
+    </p>
+
 {% endblock %}
