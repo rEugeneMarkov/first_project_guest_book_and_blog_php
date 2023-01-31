@@ -14,7 +14,7 @@ class AddArticle extends Base
         $data = [];
         $data['header'] = trim($post['add_header']);
         $data['article'] = trim($post['add_article_content']);
-        $data['url'] = $this->translit($data['header']);
+        $data['url'] = self::translit($data['header']);
         return $data;
     }
 
@@ -25,17 +25,19 @@ class AddArticle extends Base
     public static function validate(array $data): array
     {
         $error = [];
-        if (strlen($data['header']) <= 10) { // проверка имени
-                $error['e_header'] = "Введите корректный заголовок больше 10 символов";
-        } elseif (strlen($data['article']) < 200) { //проверка почты
-                $error['e_article'] = "Минимальная длинна статьи 200 символов";
+        if (strlen($data['header']) <= 10) {
+            $error['e_header'] = "Введите корректный заголовок больше 10 символов";
+        } elseif (self::isHeaderExists($data['header']) == true) {
+            $error['e_header'] = "Такая статья уже существует";
+        } elseif (strlen($data['article']) < 200) {
+            $error['e_article'] = "Минимальная длинна статьи 200 символов";
         } else {
             $error = [];
         }
         return $error;
     }
 
-    public function translit(string $s): string
+    public static function translit(string $s): string
     {
         //$s = (string) $s; // преобразуем в строковое значение
         $s = trim($s); // убираем пробелы в начале и конце строки
@@ -51,11 +53,23 @@ class AddArticle extends Base
         return $s; // возвращаем результат
     }
 
+    /**
+     * @param array <int, int|string> $data
+     */
     public static function addArticle(array $data): void
     {
         $db = \Classes\Db::getDb();
         $sth = $db->prepare("INSERT INTO `articles` (`id`, `name`, `email`, `url`, `header`, `content`, `date`) 
         VALUES (NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
         $sth->execute([$data[0], $data[1], $data[2], $data[3], $data[4]]);
+    }
+
+    public static function isHeaderExists(string $header): bool
+    {
+        $db = \Classes\Db::getDb();
+        $sth = $db->prepare("SELECT `header` FROM `articles` WHERE header = ?");
+        $sth->execute([$header]);
+        $row = $sth->rowCount();
+        return $row > 0;
     }
 }

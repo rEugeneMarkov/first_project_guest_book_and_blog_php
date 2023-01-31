@@ -1,0 +1,20 @@
+<ul>
+    {% for item in comments %}
+
+        {% if item.children %}
+            <li>
+                {{ item.comment }} 
+                <a href="/articles/{{ url }}?id={{ item.id }}&pid={{ item.pid }}&aid={{ item.aid }}">Ответить</a>
+            </li>
+                {% include 'comments.twig' with {'comments': item.children} %}
+        {% else %}
+            <li>
+                {{ item.comment }} 
+                <a href="/articles/{{ url }}?id={{ item.id}}&pid={{ item.pid }}&aid={{ item.aid }}">Ответить</a>
+            </li>
+        {% endif %}
+
+    {% endfor %}
+
+    
+</ul>

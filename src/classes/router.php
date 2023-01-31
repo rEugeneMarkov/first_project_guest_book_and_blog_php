@@ -21,21 +21,19 @@ class Router
     public function start(Request $request): Response
     {
         $route = $this->uri;
-        $route = $route[0];
+        $controller = $route[0];
 
-        if ($route == '') {
-            $route = 'index';
+        if ($controller == '') {
+            $controller = 'index';
         }
-        $file = SITE_PATH . 'controllers/' . $route . '.php';
+        $file = SITE_PATH . 'controllers/' . $controller . '.php';
 
         if (is_readable($file) == false) {
             return self::getErrorPage();
         }
 
-        $controller = $route;
-        $model = $route;
         $class = '\\controllers\\' . $controller;
-        $controller = new $class($model);
+        $controller = new $class();
         /** @var \Controllers\Base $controller */
         $content = $controller->index($request);
         return $content;
@@ -73,5 +71,5 @@ class Router
         $content = $view->render('error404.twig', []);
         $response = new \Classes\Response($content);
         return $response;
-    }//
+    }
 }

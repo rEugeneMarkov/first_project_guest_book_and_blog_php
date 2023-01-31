@@ -10,6 +10,7 @@ use Classes\Response;
 abstract class Base
 {
     protected string $model;
+    protected string $template;
     protected Environment $view;
 
     /**
@@ -21,9 +22,12 @@ abstract class Base
     protected ?\models\Base $modelObj;
     protected ?\models\User $user;
 
-    public function __construct(string $model)
+    public function __construct()
     {
-        $this->model = $model;
+        $array = explode('\\', get_class($this));
+        $this->model = $array[count($array) - 1];
+        $this->template = $this->model . '.twig';
+
         $loader = new FilesystemLoader(paths:'templates');
         $this->view = new Environment($loader);
         $class = '\\models\\' . $this->model;
@@ -49,7 +53,8 @@ abstract class Base
         if ($this->user != null) {
             $data['username'] = $this->user->name;
         }
-        $content = $this->view->render($this->model . '.twig', $data);
+
+        $content = $this->view->render($this->template, $data);
         $response = new Response($content);
         return $response;
     }
