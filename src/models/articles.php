@@ -6,7 +6,7 @@ namespace models;
 class Articles extends Base
 {
     /**
-     * @return array{id: int, name: string}
+     * @return array {id: int, name: string}
      */
     public function getData(): array
     {
