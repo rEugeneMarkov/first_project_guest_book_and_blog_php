@@ -59,9 +59,9 @@ class AddArticle extends Base
     public static function addArticle(array $data): void
     {
         $db = \Classes\Db::getDb();
-        $sth = $db->prepare("INSERT INTO `articles` (`id`, `name`, `email`, `url`, `header`, `content`, `date`) 
-        VALUES (NULL, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
-        $sth->execute([$data[0], $data[1], $data[2], $data[3], $data[4]]);
+        $sth = $db->prepare("INSERT INTO `articles` (`id`, `uid`, `url`, `header`, `content`, `date`) 
+        VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
+        $sth->execute([$data[0], $data[1], $data[2], $data[3]]);
     }
 
     public static function isHeaderExists(string $header): bool

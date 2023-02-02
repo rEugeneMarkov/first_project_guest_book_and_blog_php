@@ -22,7 +22,7 @@ class Index extends Base
                 $data = MIndex::getDataFromPost($post);
                 $message = MIndex::validate($data);
                 if ($message == []) {
-                    MIndex::addComment($this->user->name, $data['comment']);
+                    MIndex::addComment($this->user->id, $data['comment']);
                     $message['success'] = "Запись успешно сохранена!";
                 }
             }

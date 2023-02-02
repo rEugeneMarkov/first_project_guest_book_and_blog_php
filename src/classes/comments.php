@@ -18,14 +18,18 @@ class Comments
             INNER JOIN `comments` ON `users`.`id`=`comments`.`uid` WHERE `comments`.`aid` LIKE ?';
         $sth = $db->prepare($sql);
         $sth->execute([$article]);
-
         $tree = [];
-        $parents_arr = [];
-        while ($data = $sth->fetchObject('\classes\Comment')) {
-            $parents_arr[$data->pid][$data->id] = $data;
+
+        if (($data = $sth->rowCount()) > 0) {
+            $tree = [];
+            $parents_arr = [];
+            while ($data = $sth->fetchObject('\classes\Comment')) {
+                $parents_arr[$data->pid][$data->id] = $data;
+            }
+            $treeElem = $parents_arr[0];
+
+            $tree = self::generateElemTree($treeElem, $parents_arr);
         }
-        $treeElem = $parents_arr[0];
-        $tree = self::generateElemTree($treeElem, $parents_arr);
         return $tree;
     }
 

@@ -25,10 +25,10 @@ class AddArticle extends Base
                     if ($this->user != null) {
                         $data['username'] = $this->user->name;
                         $data['email'] = $this->user->email;
+                        $data['uid'] = $this->user->id;
                     }
                     $array = [
-                        $data['username'],
-                        $data['email'],
+                        $data['uid'],
                         $data['url'],
                         $data['header'],
                         $data['article']

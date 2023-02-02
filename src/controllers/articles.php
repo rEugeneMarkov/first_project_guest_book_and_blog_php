@@ -23,10 +23,11 @@ class Articles extends Base
 
             if (isset($uri[1])) {
                 $article = MArticles::getArticleByUri($uri[1]);
+                //var_dump($article);
 
                 if ($article != null) {
                     $this->template = 'article.twig';
-                    //-----------------
+
                     $Articleid = $article[0]['id'];
                     $Articleid = (int) $Articleid;
                     $comments = new \Classes\Comments();
@@ -34,8 +35,9 @@ class Articles extends Base
                     if ($this->user != null && isset($post['add_comment_to_article'])) {
                         $comments->addComment($request, $this->user);
                     }
+
                     $tree = $comments->getcommentsByArticleid($Articleid);
-                    //-----------------
+
                     return $this->contentToResponse(['data' => $article, 'comments' => $tree]);
                 } else {
                     return \Classes\Router::getErrorPage();

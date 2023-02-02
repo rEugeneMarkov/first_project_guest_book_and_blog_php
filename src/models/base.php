@@ -22,12 +22,12 @@ abstract class Base
         return $data;
     }
 
-    public static function addComment(string $name, string $comment): void
+    public static function addComment(int $id, string $comment): void
     {
         $db = \Classes\Db::getDb();
-        $sth = $db->prepare('INSERT INTO `index` (`id`, `name`, `date`, `content`) 
+        $sth = $db->prepare('INSERT INTO `index` (`id`, `uid`, `date`, `content`) 
         VALUES (NULL, ?, CURRENT_TIMESTAMP, ?)');
-        $sth->execute([$name, $comment]);
+        $sth->execute([$id, $comment]);
     }
 
     public static function getTableCount(string $table): int
@@ -47,7 +47,11 @@ abstract class Base
     public static function getTableContent(string $table, int $art, int $kol): array
     {
         $db = \Classes\Db::getDb();
-        $sth = $db->prepare('SELECT * FROM `' . $table . '` ORDER BY `id` DESC LIMIT ' . $art . ',' . $kol . '');
+        $sql = 'SELECT `' . $table . '` . * , `users`.`name` FROM `' . $table . '` 
+            INNER JOIN `users` ON `' . $table . '`.`uid`=`users`.`id` 
+            ORDER BY `' . $table . '`.`id` DESC LIMIT ' . $art . ',' . $kol . '';
+        $sth = $db->prepare($sql);
+        //$sth = $db->prepare('SELECT * FROM `' . $table . '` ORDER BY `id` DESC LIMIT ' . $art . ',' . $kol . '');
         $sth->execute();
         $data = $sth->fetchAll();
         return $data;
