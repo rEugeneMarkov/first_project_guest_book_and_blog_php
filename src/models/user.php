@@ -5,6 +5,7 @@ namespace models;
 // модель
 class User extends Base
 {
+    public int $id;
     public string $name = '';
     public string $email = '';
 

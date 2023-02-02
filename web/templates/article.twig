@@ -26,12 +26,14 @@
         {#{{include ('pagination.twig')}}#}
     </p>
     <p>
+        {% if username %}
         <div id="form">
             <form action="" method="post">
                 <p><textarea type="text" class="form-control" name="comment" placeholder="Ваш комментарий"></textarea></p>
                 <p><input name="add_comment_to_article" type="submit" class="btn btn-info btn-block" value="Оставить комментарий"></p>
             </form>
         </div>
+        {% endif %}
     </p>
 
 {% endblock %}

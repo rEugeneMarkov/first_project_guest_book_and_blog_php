@@ -3,13 +3,15 @@
 
         {% if item.children %}
             <li>
-                {{ item.comment }} 
+                 <b>{{ item.name }} </b> <br>
+                 {{ item.comment }} <br>
                 <a href="/articles/{{ url }}?id={{ item.id }}&pid={{ item.pid }}&aid={{ item.aid }}">Ответить</a>
             </li>
                 {% include 'comments.twig' with {'comments': item.children} %}
         {% else %}
             <li>
-                {{ item.comment }} 
+                <b>{{ item.name }}</b> <br>
+                {{ item.comment }} <br>
                 <a href="/articles/{{ url }}?id={{ item.id}}&pid={{ item.pid }}&aid={{ item.aid }}">Ответить</a>
             </li>
         {% endif %}

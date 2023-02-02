@@ -31,8 +31,8 @@ class Articles extends Base
                     $Articleid = (int) $Articleid;
                     $comments = new \Classes\Comments();
 
-                    if (isset($post['add_comment_to_article'])) {
-                        $comments->addComment($request);
+                    if ($this->user != null && isset($post['add_comment_to_article'])) {
+                        $comments->addComment($request, $this->user);
                     }
                     $tree = $comments->getcommentsByArticleid($Articleid);
                     //-----------------
