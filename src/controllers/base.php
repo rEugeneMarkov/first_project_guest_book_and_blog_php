@@ -14,7 +14,7 @@ abstract class Base
     protected Environment $view;
 
     /**
-     * @param array<string, array> $data
+     * @var array<string, array> $data
      * @var array<string|int, string|int>
      */
 

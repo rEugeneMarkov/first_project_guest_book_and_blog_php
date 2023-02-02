@@ -6,15 +6,7 @@ namespace models;
 class Articles extends Base
 {
     /**
-     * @return array {id: int, name: string}
-     */
-    public function getData(): array
-    {
-        return array('id' => 1, 'name' => 'Articles2');
-    }
-
-    /**
-     * @return array<int|string, int|string>
+     * @return array <int|string, array<int|string, int|string>>
      */
     public static function getArticleByUri(string $uri): ?array
     {

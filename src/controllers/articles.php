@@ -28,18 +28,15 @@ class Articles extends Base
                     $this->template = 'article.twig';
                     //-----------------
                     $Articleid = $article[0]['id'];
+                    $Articleid = (int) $Articleid;
                     $comments = new \Classes\Comments();
-
-                    // $get = $request->get;
-                    // $pagination = new \Classes\Pagination('comments', 3, $get);
-                    // $pagesInfo = $pagination->getPagesInfo();
 
                     if (isset($post['add_comment_to_article'])) {
                         $comments->addComment($request);
                     }
                     $tree = $comments->getcommentsByArticleid($Articleid);
                     //-----------------
-                    return $this->contentToResponse(['data' => $article, 'comments' => $tree, /*'pages' => $pagesInfo*/]);
+                    return $this->contentToResponse(['data' => $article, 'comments' => $tree]);
                 } else {
                     return \Classes\Router::getErrorPage();
                 }
