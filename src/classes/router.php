@@ -30,13 +30,17 @@ class Router
 
         if (is_readable($file) == false) {
             return self::getErrorPage();
+        } elseif (isset($route[1]) && $route[0] != 'articles') {
+            return self::getErrorPage();
+        } elseif (isset($route[2])) {
+            return self::getErrorPage();
+        } else {
+            $class = '\\controllers\\' . $controller;
+            $controller = new $class();
+            /** @var \Controllers\Base $controller */
+            $content = $controller->index($request);
+            return $content;
         }
-
-        $class = '\\controllers\\' . $controller;
-        $controller = new $class();
-        /** @var \Controllers\Base $controller */
-        $content = $controller->index($request);
-        return $content;
     }
 
     public function handle(Request $request): Response

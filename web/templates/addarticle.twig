@@ -1,7 +1,7 @@
 {% extends 'base.twig' %}
 {% block body%}
-<h2>Страница создания поста</h2>
-
+<h2>Страница создания статьи</h2>
+{% if username %}
 <div id="form">
     {% if message.success_add_article %}
         <div class="text-success">{{message.success_add_article}}</div>
@@ -18,5 +18,7 @@
             <p><input name="add_article_button"type="submit" class="btn btn-info btn-block" value="Опубликовать статью"></p>
         </form> 
     </div>
-
+{% else %}
+<b>Нужно выполнить вход</b> <a href="/login">Войти</a> <br><br>
+{% endif %}
 {% endblock %}

@@ -4,7 +4,7 @@
 <h2>Статья</h2>
 
 {% set url = "" %}
-{% set article_id = "" %}
+
 {% for item in data %}
 <div class="note">
     <p>
@@ -14,7 +14,6 @@
     <p>
         {{ item.content }}
         {% set url = item.url %}
-        {% set article_id = item.id %}
     </p>
     
 </div>
@@ -23,13 +22,12 @@
     <p>Комментарии</p>
     <p>
         {{include ('comments.twig')}}
-        {#{{include ('pagination.twig')}}#}
     </p>
     <p>
         {% if username %}
         <div id="form">
             <form action="" method="post">
-                <p><textarea type="text" class="form-control" name="comment" placeholder="Ваш комментарий"></textarea></p>
+                <p><input type="text" class="form-control" name="comment" placeholder="Ваш комментарий"></p>
                 <p><input name="add_comment_to_article" type="submit" class="btn btn-info btn-block" value="Оставить комментарий"></p>
             </form>
         </div>

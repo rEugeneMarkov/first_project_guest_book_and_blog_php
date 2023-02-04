@@ -4,8 +4,6 @@ namespace Classes;
 
 class Comments
 {
-    public int $commentsCount;
-
     /**
     * @return array <mixed>
     * Получаем все комментарии к определённой статье
@@ -13,17 +11,15 @@ class Comments
     public function getcommentsByArticleid(int $article): ?array
     {
         $db = \Classes\Db::getDb();
-        //$sth = $db->prepare("SELECT * FROM `comments` WHERE aid = ?");
         $sql = 'SELECT `users`.`name`, `comments`. * FROM `users` 
-            INNER JOIN `comments` ON `users`.`id`=`comments`.`uid` WHERE `comments`.`aid` LIKE ?';
+            INNER JOIN `comments` ON `users`.`id`=`comments`.`uid` WHERE `comments`.`aid` = ?';
         $sth = $db->prepare($sql);
         $sth->execute([$article]);
         $tree = [];
 
         if (($data = $sth->rowCount()) > 0) {
-            $tree = [];
             $parents_arr = [];
-            while ($data = $sth->fetchObject('\classes\Comment')) {
+            while ($data = $sth->fetchObject(Comment::class)) {
                 $parents_arr[$data->pid][$data->id] = $data;
             }
             $treeElem = $parents_arr[0];

@@ -3,17 +3,17 @@
 
         {% if item.children %}
             <li>
-                 <b>{{ item.name }} </b> <br>
-                 {{ item.comment }} <br>
+                 <b>{{ item.name }} </b> <small style="font-size: 10px">{{ item.date }}  </small> <br>
+                 {{ item.comment }} 
                 <a href="/articles/{{ url }}?id={{ item.id }}&pid={{ item.pid }}&aid={{ item.aid }}">Ответить</a>
-            </li>
-                {% include 'comments.twig' with {'comments': item.children} %}
+            </li><br>
+            {% include 'comments.twig' with {'comments': item.children} %}    
         {% else %}
             <li>
-                <b>{{ item.name }}</b> <br>
-                {{ item.comment }} <br>
+                <b>{{ item.name }}</b>  <small style="font-size: 10px">{{ item.date }}  </small> <br>
+                {{ item.comment }} 
                 <a href="/articles/{{ url }}?id={{ item.id}}&pid={{ item.pid }}&aid={{ item.aid }}">Ответить</a>
-            </li>
+            </li><br>
         {% endif %}
 
     {% endfor %}

@@ -1,9 +1,9 @@
 {% extends 'base.twig' %}
 {% block body%}
-<h2>Страница входа/выхода</h2>
+<h2>Страница входа и выхода</h2>
 
 {% if username %}
-<div style="text-align: center;">
+<div>
 <form method="post">
     Вы выполнили вход как {{username}}
     <button name="clear_session" type="submit"class="btn btn-info btn-group">Выйти</button>
@@ -12,7 +12,7 @@
 
 {% else %}
 
-<div style="text-align: center;">
+<div>
     <form action="" method="post">
         <input type="email" name="email_login" placeholder="Введите email" class="form-group">
         <input type="password" name="pass_login" placeholder="Введите пароль" class="form-group">

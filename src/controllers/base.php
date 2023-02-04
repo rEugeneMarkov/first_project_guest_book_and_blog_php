@@ -14,10 +14,8 @@ abstract class Base
     protected Environment $view;
 
     /**
-     * @var array<string, array> $data
-     * @var array<string|int, string|int>
+     * @var array <string, array <string|int, string|int>> $data
      */
-
     protected array $data;
     protected ?\models\Base $modelObj;
     protected ?\models\User $user;
