@@ -54,7 +54,7 @@ class AddArticle extends Base
     }
 
     /**
-     * @param array <int, int|string> $data
+     * @param array <string, int|string> $data
      */
     public static function addArticle(array $data): void
     {
