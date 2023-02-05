@@ -1,12 +1,13 @@
 {% extends 'base.twig' %}
 {% block body%}
 
-<h2>Статья</h2>
-
 {% set url = "" %}
 
 {% for item in data %}
 <div class="note">
+    <p>
+    <a href="/articles/{{ item.url }}?aid={{ item.id }}&id=0"><h2>{{ item.header }}</h2></a>
+    </p>
     <p>
         <span class="date">{{ item.date }}</span>
         <span class="name">{{ item.name }}</span>

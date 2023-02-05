@@ -25,7 +25,7 @@ abstract class Base
     public static function addComment(int $id, string $comment): void
     {
         $db = \Classes\Db::getDb();
-        $sth = $db->prepare('INSERT INTO `index` (`id`, `uid`, `date`, `content`) 
+        $sth = $db->prepare('INSERT INTO `index` (`id`, `user_id`, `date`, `content`) 
         VALUES (NULL, ?, CURRENT_TIMESTAMP, ?)');
         $sth->execute([$id, $comment]);
     }
@@ -48,7 +48,7 @@ abstract class Base
     {
         $db = \Classes\Db::getDb();
         $sql = 'SELECT `' . $table . '` . * , `users`.`name` FROM `' . $table . '` 
-            INNER JOIN `users` ON `' . $table . '`.`uid`=`users`.`id` 
+            INNER JOIN `users` ON `' . $table . '`.`user_id`=`users`.`id` 
             ORDER BY `' . $table . '`.`id` DESC LIMIT ' . $art . ',' . $kol . '';
         $sth = $db->prepare($sql);
         //$sth = $db->prepare('SELECT * FROM `' . $table . '` ORDER BY `id` DESC LIMIT ' . $art . ',' . $kol . '');

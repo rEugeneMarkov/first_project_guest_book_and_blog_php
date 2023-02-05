@@ -21,18 +21,14 @@ class Router
     public function start(Request $request): Response
     {
         $route = $this->uri;
-        $controller = $route[0];
+        $controller = isset($route[0]) ? $route[0] : '';
 
         if ($controller == '') {
             $controller = 'index';
         }
         $file = SITE_PATH . 'controllers/' . $controller . '.php';
 
-        if (is_readable($file) == false) {
-            return self::getErrorPage();
-        } elseif (isset($route[1]) && $route[0] != 'articles') {
-            return self::getErrorPage();
-        } elseif (isset($route[2])) {
+        if (is_readable($file) == false || isset($route[2]) || isset($route[1]) && $route[0] != 'articles') {
             return self::getErrorPage();
         } else {
             $class = '\\controllers\\' . $controller;

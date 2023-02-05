@@ -13,7 +13,7 @@ class AddArticle extends Base
     {
         $data = [];
         $data['header'] = trim($post['add_header']);
-        $data['article'] = trim($post['add_article_content']);
+        $data['content'] = trim($post['add_article_content']);
         $data['url'] = self::translit($data['header']);
         return $data;
     }
@@ -26,11 +26,11 @@ class AddArticle extends Base
     {
         $error = [];
         if (strlen($data['header']) <= 10) {
-            $error['e_header'] = "Введите корректный заголовок больше 10 символов";
+            $error['header'] = "Введите корректный заголовок больше 10 символов";
         } elseif (self::isHeaderExists($data['header']) == true) {
-            $error['e_header'] = "Такая статья уже существует";
-        } elseif (strlen($data['article']) < 200) {
-            $error['e_article'] = "Минимальная длинна статьи 200 символов";
+            $error['header'] = "Такая статья уже существует";
+        } elseif (strlen($data['content']) < 200) {
+            $error['content'] = "Минимальная длинна статьи 200 символов";
         } else {
             $error = [];
         }
@@ -59,9 +59,9 @@ class AddArticle extends Base
     public static function addArticle(array $data): void
     {
         $db = \Classes\Db::getDb();
-        $sth = $db->prepare("INSERT INTO `articles` (`id`, `uid`, `url`, `header`, `content`, `date`) 
-        VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
-        $sth->execute([$data[0], $data[1], $data[2], $data[3]]);
+        $sth = $db->prepare("INSERT INTO `articles` (`id`, `user_id`, `url`, `header`, `content`, `date`) 
+        VALUES (NULL, :user_id, :url, :header, :content, CURRENT_TIMESTAMP)");
+        $sth->execute($data);
     }
 
     public static function isHeaderExists(string $header): bool

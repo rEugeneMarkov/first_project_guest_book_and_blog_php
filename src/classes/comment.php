@@ -7,8 +7,8 @@ use Classes\Comment;
 class Comment
 {
     public int $id;
-    public int $pid;
-    public int $aid;
+    public int $parent_id;
+    public int $article_id;
     public string $comment;
     public string $date;
     /**

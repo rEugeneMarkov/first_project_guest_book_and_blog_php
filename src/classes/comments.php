@@ -12,7 +12,7 @@ class Comments
     {
         $db = \Classes\Db::getDb();
         $sql = 'SELECT `users`.`name`, `comments`. * FROM `users` 
-            INNER JOIN `comments` ON `users`.`id`=`comments`.`uid` WHERE `comments`.`aid` = ?';
+            INNER JOIN `comments` ON `users`.`id`=`comments`.`user_id` WHERE `comments`.`article_id` = ?';
         $sth = $db->prepare($sql);
         $sth->execute([$article]);
         $tree = [];
@@ -20,7 +20,7 @@ class Comments
         if (($data = $sth->rowCount()) > 0) {
             $parents_arr = [];
             while ($data = $sth->fetchObject(Comment::class)) {
-                $parents_arr[$data->pid][$data->id] = $data;
+                $parents_arr[$data->parent_id][$data->id] = $data;
             }
             $treeElem = $parents_arr[0];
 
@@ -50,9 +50,9 @@ class Comments
     public function getDataFromRequest(Request $request, \models\User $user): array
     {
         return [
-            'pid'  => $request->get['id'],
-            'aid' => $request->get['aid'],
-            'uid' => $user->id,
+            'parent_id'  => $request->get['id'],
+            'article_id' => $request->get['aid'],
+            'user_id' => $user->id,
             'comment'  => trim($request->post['comment'])
         ];
     }
@@ -62,9 +62,9 @@ class Comments
         $data = $this->getDataFromRequest($request, $user);
         if ($data['comment'] != '') {
             $db = \Classes\Db::getDb();
-            $sth = $db->prepare("INSERT INTO `comments` (`id`, `pid`, `aid`, `uid`, `comment`, `date`) 
-            VALUES (NULL, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
-            $sth->execute([$data['pid'], $data['aid'], $data['uid'], $data['comment']]);
+            $sth = $db->prepare("INSERT INTO `comments` (`id`, `parent_id`, `article_id`, `user_id`, `comment`, `date`) 
+            VALUES (NULL, :parent_id, :article_id, :user_id, :comment, CURRENT_TIMESTAMP)");
+            $sth->execute($data);
         }
     }
 }
