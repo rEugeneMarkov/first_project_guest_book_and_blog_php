@@ -46,14 +46,14 @@ abstract class Base
     /**
     * @param array<string|int, mixed> $data
     */
-    public function contentToResponse(array $data): Response
+    public function contentToResponse(array $data, int $status = 200, array $headers = []): Response
     {
         if ($this->user != null) {
             $data['username'] = $this->user->name;
         }
 
         $content = $this->view->render($this->template, $data);
-        $response = new Response($content);
+        $response = new Response($content, $status, $headers);
         return $response;
     }
 }

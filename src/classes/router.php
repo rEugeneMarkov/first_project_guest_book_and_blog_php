@@ -21,7 +21,7 @@ class Router
     public function start(Request $request): Response
     {
         $route = $this->uri;
-        $controller = isset($route[0]) ? $route[0] : '';
+        $controller = $route[0] ?: '';
 
         if ($controller == '') {
             $controller = 'index';
@@ -69,7 +69,7 @@ class Router
         $loader = new FilesystemLoader(paths:'templates');
         $view = new Environment($loader);
         $content = $view->render('error404.twig', []);
-        $response = new \Classes\Response($content);
+        $response = new \Classes\Response($content, 404);
         return $response;
     }
 }
