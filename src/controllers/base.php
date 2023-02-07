@@ -44,7 +44,8 @@ abstract class Base
     abstract public function index(Request $request): Response;
 
     /**
-    * @param array<string|int, mixed> $data
+    * @param array <string|int, mixed> $data
+    * @param array <string,string> $headers
     */
     public function contentToResponse(array $data, int $status = 200, array $headers = []): Response
     {

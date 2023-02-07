@@ -8,8 +8,10 @@ class Response
     protected string $headers = "";
     protected int $statusCode;
     protected string $statusText;
-
-    public static $statusTexts = [
+    /**
+     * @var array <int,string> $statusTexts
+     */
+    public static array $statusTexts = [
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',            // RFC2518
@@ -74,6 +76,9 @@ class Response
         511 => 'Network Authentication Required',                             // RFC6585
     ];
 
+    /**
+     * @param array <string,string> $headers
+     */
     public function __construct(string $content = '', int $status = 200, array $headers = [])
     {
         $this->setContent($content);
@@ -84,14 +89,14 @@ class Response
 
     public function __toString(): string
     {
-        return
-        header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->statusText)) . "\r\n" .
-        header($this->headers) . "\r\n" .
-        $this->getContent();
+        header(sprintf('HTTP/1.1 %s %s', $this->statusCode, $this->statusText));
+        //header('HTTP/1.1' . $this->statusCode . $this->statusText);
+        header($this->headers);
+        return $this->getContent();
     }
 
     /**
-     * @var array <string,string> $headers
+     * @param array <string,string> $headers
      */
     public function setHeaders(array $headers): void
     {
@@ -139,7 +144,7 @@ class Response
 
         return $this;
     }
-    public static function redirect(string $url)
+    public static function redirect(string $url): string
     {
         $content = sprintf('<!DOCTYPE html>
         <html>

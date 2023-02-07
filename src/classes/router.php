@@ -21,7 +21,7 @@ class Router
     public function start(Request $request): Response
     {
         $route = $this->uri;
-        $controller = $route[0] ?: '';
+        $controller = isset($route[0]) ? $route[0] : '';
 
         if ($controller == '') {
             $controller = 'index';

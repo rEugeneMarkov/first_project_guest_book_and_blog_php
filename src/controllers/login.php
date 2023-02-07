@@ -20,7 +20,7 @@ class Login extends Base
             if ($user != false) {
                 $_SESSION['email'] = $data['email'] ;
                 $headers = ['Location' => '/'];
-                $status = 301;
+                $status = 302;
                 //$content = Response::redirect('/');
                 //$response = new Response($content);
                 //return $response;
@@ -29,7 +29,7 @@ class Login extends Base
         if (isset($post['clear_session'])) {
             unset($_SESSION['email']);
             $headers = ['Location' => '/login'];
-            $status = 301;
+            $status = 302;
             //$content = Response::redirect('/login');
             //$response = new Response($content);
             //return $response;
