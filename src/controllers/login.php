@@ -11,19 +11,29 @@ class Login extends Base
     {
         $post = $request->post;
         $data = [];
+        $headers = [];
+        $status = 200;
 
         if (isset($post['login_button'])) {
             $data = \models\Login::getDataFromPost($post);
             $user = \models\User::getUserByEmailAndPass($data['email'], $data['pass']);
             if ($user != false) {
                 $_SESSION['email'] = $data['email'] ;
-                header("Location: /");
+                $headers = ['Location' => '/'];
+                $status = 302;
+                //$content = Response::redirect('/');
+                //$response = new Response($content);
+                //return $response;
             }
         }
         if (isset($post['clear_session'])) {
             unset($_SESSION['email']);
-            header("Location: /login");
+            $headers = ['Location' => '/login'];
+            $status = 302;
+            //$content = Response::redirect('/login');
+            //$response = new Response($content);
+            //return $response;
         }
-        return $this->contentToResponse(['data' => $data]);
+        return $this->contentToResponse(['data' => $data], $status, $headers);
     }
 }

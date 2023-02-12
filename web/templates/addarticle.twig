@@ -1,22 +1,24 @@
 {% extends 'base.twig' %}
 {% block body%}
-<h2>Страница создания поста</h2>
-
+<h2>Страница создания статьи</h2>
+{% if username %}
 <div id="form">
     {% if message.success_add_article %}
         <div class="text-success">{{message.success_add_article}}</div>
     {% endif %}
         <form action="" method="post">
             <p><input type="text" name="add_header" value="{{data.header}}" placeholder="Введите заголовок статьи" class="form-control"></p>
-                {% if message.e_header %}
-                    <div class="text-danger">{{message.e_header}}</div><br>
+                {% if errors.header %}
+                    <div class="text-danger">{{errors.header}}</div><br>
                 {% endif %}
-            <p><textarea type="text" class="form-control" name="add_article_content" placeholder="Ваша статья">{{data.article}}</textarea></p>
-                {% if message.e_article %}
-                    <div class="text-danger">{{message.e_article}}</div><br>
+            <p><textarea type="text" class="form-control" name="add_article_content" placeholder="Ваша статья">{{data.content}}</textarea></p>
+                {% if errors.content %}
+                    <div class="text-danger">{{errors.content}}</div><br>
                 {% endif %}
             <p><input name="add_article_button"type="submit" class="btn btn-info btn-block" value="Опубликовать статью"></p>
         </form> 
     </div>
-
+{% else %}
+<b>Нужно выполнить вход</b> <a href="/login">Войти</a> <br><br>
+{% endif %}
 {% endblock %}

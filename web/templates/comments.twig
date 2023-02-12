@@ -1,0 +1,22 @@
+<ul>
+    {% for item in comments %}
+
+        {% if item.children %}
+            <li>
+                 <b>{{ item.name }} </b> <small style="font-size: 10px">{{ item.date }}  </small> <br>
+                 {{ item.comment }} 
+                <a href="/articles/{{ url }}?id={{ item.id }}&aid={{ item.article_id }}">Ответить</a>
+            </li><br>
+            {% include 'comments.twig' with {'comments': item.children} %}    
+        {% else %}
+            <li>
+                <b>{{ item.name }}</b>  <small style="font-size: 10px">{{ item.date }}  </small> <br>
+                {{ item.comment }} 
+                <a href="/articles/{{ url }}?id={{ item.id}}&aid={{ item.article_id }}">Ответить</a>
+            </li><br>
+        {% endif %}
+
+    {% endfor %}
+
+    
+</ul>

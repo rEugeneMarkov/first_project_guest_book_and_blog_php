@@ -17,17 +17,10 @@ class Index extends Base
             $data = MIndex::getDataFromPost($post);
             $message = MIndex::validate($data);
             if ($message == []) {
-                MIndex::addComment($this->user->name, $data['comment']);
+                MIndex::addComment($this->user->id, $data['comment']);
                 $message['success'] = "Запись успешно сохранена!";
             }
         }
-        //тест комментариев
-        //$comments = new \Classes\Comments();
-        //$data = $comments->getcommentsByArticleid(1);
-        //var_dump($data);
-        //$tree = $comments->createTree($data);
-        //var_dump($tree);
-        //тест комментариев
 
         $get = $request->get;
         $pagination = new \Classes\Pagination('index', 3, $get);

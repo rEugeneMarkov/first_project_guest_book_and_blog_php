@@ -11,8 +11,6 @@
     <div class="text-danger">{{message.error}}</div><br>
 {% endif %}
 
-{{include ('pagination.twig')}}
-
 {% for item in data %}
 <div class="note">
     <p>
@@ -25,7 +23,7 @@
 </div>
 
 {% endfor %}
-
+<center> {{ include ('pagination.twig') }} </center>
 {% if username %}
 <div id="form">
     <form action="" method="post">

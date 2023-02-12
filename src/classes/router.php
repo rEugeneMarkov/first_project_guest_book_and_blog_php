@@ -21,25 +21,22 @@ class Router
     public function start(Request $request): Response
     {
         $route = $this->uri;
-        $route = $route[0];
+        $controller = isset($route[0]) ? $route[0] : '';
 
-        if ($route == '') {
-            $route = 'index';
+        if ($controller == '') {
+            $controller = 'index';
         }
-        $file = SITE_PATH . 'controllers/' . $route . '.php';
-        //var_dump($route);
+        $file = SITE_PATH . 'controllers/' . $controller . '.php';
 
-        if (is_readable($file) == false) {
+        if (is_readable($file) == false || isset($route[2]) || isset($route[1]) && $route[0] != 'articles') {
             return self::getErrorPage();
+        } else {
+            $class = '\\controllers\\' . $controller;
+            $controller = new $class();
+            /** @var \Controllers\Base $controller */
+            $content = $controller->index($request);
+            return $content;
         }
-
-        $controller = $route;
-        $model = $route;
-        $class = '\\controllers\\' . $controller;
-        $controller = new $class($model);
-        /** @var \Controllers\Base $controller */
-        $content = $controller->index($request);
-        return $content;
     }
 
     public function handle(Request $request): Response
@@ -72,7 +69,7 @@ class Router
         $loader = new FilesystemLoader(paths:'templates');
         $view = new Environment($loader);
         $content = $view->render('error404.twig', []);
-        $response = new \Classes\Response($content);
+        $response = new \Classes\Response($content, 404);
         return $response;
     }
 }

@@ -10,20 +10,22 @@ use Classes\Response;
 abstract class Base
 {
     protected string $model;
+    protected string $template;
     protected Environment $view;
 
     /**
-     * @param array<string, array> $data
-     * @var array<string|int, string|int>
+     * @var array <string, array <string|int, string|int>> $data
      */
-
     protected array $data;
     protected ?\models\Base $modelObj;
     protected ?\models\User $user;
 
-    public function __construct(string $model)
+    public function __construct()
     {
-        $this->model = $model;
+        $array = explode('\\', get_class($this));
+        $this->model = $array[count($array) - 1];
+        $this->template = $this->model . '.twig';
+
         $loader = new FilesystemLoader(paths:'templates');
         $this->view = new Environment($loader);
         $class = '\\models\\' . $this->model;
@@ -42,15 +44,17 @@ abstract class Base
     abstract public function index(Request $request): Response;
 
     /**
-    * @param array<string|int, mixed> $data
+    * @param array <string|int, mixed> $data
+    * @param array <string,string> $headers
     */
-    public function contentToResponse(array $data): Response
+    public function contentToResponse(array $data, int $status = 200, array $headers = []): Response
     {
         if ($this->user != null) {
             $data['username'] = $this->user->name;
         }
-        $content = $this->view->render($this->model . '.twig', $data);
-        $response = new Response($content);
+
+        $content = $this->view->render($this->template, $data);
+        $response = new Response($content, $status, $headers);
         return $response;
     }
 }

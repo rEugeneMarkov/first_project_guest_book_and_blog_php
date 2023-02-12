@@ -12,21 +12,17 @@ class AddArticle extends Base
         $post = $request->post;
         $message = [];
         $data = [];
+        $errors = [];
 
-        if ($post != []) {
+        if ($this->user != null && $post != []) {
             $data = \models\AddArticle::getDataFromPost($post);
-            $message = \models\AddArticle::validate($data);
-            if ($message == []) {
-                if ($this->user != null) {
-                    $data['username'] = $this->user->name;
-                    $data['email'] = $this->user->email;
-                }
-                $array = [$data['username'], $data['email'], $data['url'], $data['header'], $data['article']];
-                \models\AddArticle::addArticle($array);
+            $errors = \models\AddArticle::validate($data);
+            if ($errors == []) {
+                $data['user_id'] = $this->user->id;
+                \models\AddArticle::addArticle($data);
                 $message['success_add_article'] = "Вы успешно добавили статью!";
-                //header("Location: /articles");
             }
         }
-        return $this->contentToResponse(['data' => $data, 'message' => $message]);
+        return $this->contentToResponse(['data' => $data, 'message' => $message, 'errors' => $errors]);
     }
 }

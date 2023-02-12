@@ -1,52 +1,69 @@
 <?php
 
 namespace Classes;
- 
+
 class Comments
 {
     /**
     * @return array <mixed>
     */
-    public function getcommentsByArticleid(int $article): array
+    public function getcommentsByArticleid(int $article): ?array
     {
         $db = \Classes\Db::getDb();
-        $sth = $db->prepare("SELECT * FROM `comments` WHERE aid = ?");
+        $sql = 'SELECT `users`.`name`, `comments`. * FROM `users` 
+            INNER JOIN `comments` ON `users`.`id`=`comments`.`user_id` WHERE `comments`.`article_id` = ?';
+        $sth = $db->prepare($sql);
         $sth->execute([$article]);
-        $data = $sth->fetchAll();
-        return $data;
+        $tree = [];
+
+        if (($data = $sth->rowCount()) > 0) {
+            $parents_arr = [];
+            while ($data = $sth->fetchObject(Comment::class)) {
+                $parents_arr[$data->parent_id][$data->id] = $data;
+            }
+            $treeElem = $parents_arr[0];
+
+            $tree = self::generateElemTree($treeElem, $parents_arr);
+        }
+        return $tree;
     }
 
     /**
-    * @param array <mixed> $data
-    * @return array <mixed>
-    */
-    public function createTree(array $data): array
-    {
-        $parents_arr = [];
-
-	    foreach($data as $key=>$item) {
-		    $parents_arr[$item['pid']][$item['id']] = $item;
-	    }
-	    $treeElem = $parents_arr[0];
-	    self::generateElemTree($treeElem,$parents_arr);
-	
-	    return $treeElem;
-    }
-
-    /**
-     * @param array <mixed> $parents_arr
-     * @param array <mixed> $treeElem
+     * @param array <int, Comment> $treeElem
+     * @param array <int, array<int, Comment>> $parents_arr
+     * @return array <int, Comment>
      */
-    public function generateElemTree(&$treeElem,$parents_arr): void
+    public function generateElemTree(array &$treeElem, array $parents_arr): array
     {
-        foreach($treeElem as $key=>$item) {
-            if(!isset($item['children'])) {
-                $treeElem[$key]['children'] = [];
+        foreach ($treeElem as $key => $item) {
+            if (array_key_exists($key, $parents_arr)) {
+                $treeElem[$key]->children = $parents_arr[$key];
+                self::generateElemTree($treeElem[$key]->children, $parents_arr);
             }
-            if(array_key_exists($key,$parents_arr)) {
-                $treeElem[$key]['children'] = $parents_arr[$key];
-                self::generateElemTree($treeElem[$key]['children'],$parents_arr);
-            }
+        }
+        return $treeElem;
+    }
+    /**
+     * @return array <string,int|string>
+     */
+    public function getDataFromRequest(Request $request, \models\User $user): array
+    {
+        return [
+            'parent_id'  => $request->get['id'],
+            'article_id' => $request->get['aid'],
+            'user_id' => $user->id,
+            'comment'  => trim($request->post['comment'])
+        ];
+    }
+
+    public function addComment(Request $request, \models\User $user): void
+    {
+        $data = $this->getDataFromRequest($request, $user);
+        if ($data['comment'] != '') {
+            $db = \Classes\Db::getDb();
+            $sth = $db->prepare("INSERT INTO `comments` (`id`, `parent_id`, `article_id`, `user_id`, `comment`, `date`) 
+            VALUES (NULL, :parent_id, :article_id, :user_id, :comment, CURRENT_TIMESTAMP)");
+            $sth->execute($data);
         }
     }
 }
